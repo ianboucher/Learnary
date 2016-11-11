@@ -11,6 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function() {
+    return view('index');
 });
+
+// CATCH ALL ROUTE =======================================================
+// all routes that are not home or api will be redirected to the frontend
+// this allows angular to route them
+Route::any('{undefinedRoute}', function ($undefinedRoute) {
+    return view('index');
+})->where('undefinedRoute', '([A-z\d-\/_.]+)?');
