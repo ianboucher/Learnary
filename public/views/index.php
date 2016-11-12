@@ -18,6 +18,8 @@
     <!-- <link rel="stylesheet" type="text/css" href="/styles/normalize.css"> -->
     <link rel="stylesheet" type="text/css" href="/css/main.css">
     <link rel="stylesheet" type="text/css" href="/css/landing.css">
+    <link rel="stylesheet" type="text/css" href="/css/nav.css">
+
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <!-- <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet"> -->
@@ -40,7 +42,7 @@
     <!-- APPLICATION SCRIPTS -->
     <script src="/js/app.js"></script>
     <script src="/js/landing/LandingCtrl.js"></script>
-    <script src="/js/landing/NavCtrl.js"></script>
+    <script src="/js/nav/NavCtrl.js"></script>
 
 </body>
 </html>
