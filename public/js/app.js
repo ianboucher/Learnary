@@ -23,5 +23,38 @@
                         "templateUrl" : "js/landing/landing.html"
                     }
                 )
+                .state
+                (
+                    "login",
+                    {
+                        "url"         : "/login",
+                        "controller"  : "AuthCtrl as auth",
+                        "templateUrl" : "js/auth/login.html"//,
+                        // "onEnter"     : ["$state", "Auth", function($state, Auth)
+                        //                 {
+                        //                     Auth.currentUser().then(function ()
+                        //                     {
+                        //                         $state.go("landing");
+                        //                     });
+                        //                 }]
+                    }
+                )
+                .state
+                (
+                    "signup",
+                    {
+                        "url"         : "/signup",
+                        "controller"  : "AuthCtrl as auth",
+                        "templateUrl" : "js/auth/signup.html"//,
+                        // "onEnter"     : ["$state", "Auth", function ($state, Auth)
+                        //                 {
+                        //                     Auth.currentUser().then(function ()
+                        //                     {
+                        //                         $state.go("landing");
+                        //                     });
+                        //                 }]
+                    }
+                )
+
         })
 })();

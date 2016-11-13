@@ -30,7 +30,7 @@
 
 <body>
 
-
+    <!-- INJECT THE ANGULAR TEMPLATES -->
     <ui-view></ui-view>
 
 
@@ -43,6 +43,7 @@
     <script src="/js/app.js"></script>
     <script src="/js/landing/LandingCtrl.js"></script>
     <script src="/js/nav/NavCtrl.js"></script>
+    <script src="/js/auth/AuthCtrl.js"></script>
 
 </body>
 </html>
