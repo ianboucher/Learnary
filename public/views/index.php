@@ -35,15 +35,18 @@
 
 
     <!-- APPLICATION DEPENDENCIES -->
+    <!-- TO-DO: Consider loading dependencies from 'node_modules' folder? -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.2.0/ui-bootstrap-tpls.min.js"></script>
+    <script src="//cdn.jsdelivr.net/satellizer/0.15.5/satellizer.min.js"></script>
 
     <!-- APPLICATION SCRIPTS -->
     <script src="/js/app.js"></script>
     <script src="/js/landing/LandingCtrl.js"></script>
     <script src="/js/nav/NavCtrl.js"></script>
     <script src="/js/auth/AuthCtrl.js"></script>
+    <script src="/js/user/UserCtrl.js"></script>
 
 </body>
 </html>

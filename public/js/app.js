@@ -3,8 +3,8 @@
     "use strict";
 
     angular
-        .module("learnary", ["ui.router", "ui.bootstrap"])
-        .config(function ($stateProvider, $locationProvider)
+        .module("learnary", ["ui.router", "ui.bootstrap", "satellizer"])
+        .config(function ($stateProvider, $locationProvider, $authProvider, $urlRouterProvider)
         {
             $locationProvider
                 .html5Mode
@@ -12,6 +12,14 @@
                     "enabled": true,
                     "requireBase": false
                 });
+
+            // Satellizer configuration that specifies which API
+            // route the JWT should be retrieved from
+            $authProvider.loginUrl = "/api/v1.0.0/authenticate";
+
+            // Redirect to the auth state if any other states
+            // are requested other than users
+            $urlRouterProvider.otherwise("/login");
 
             $stateProvider
                 .state
@@ -29,14 +37,7 @@
                     {
                         "url"         : "/login",
                         "controller"  : "AuthCtrl as auth",
-                        "templateUrl" : "js/auth/login.html"//,
-                        // "onEnter"     : ["$state", "Auth", function($state, Auth)
-                        //                 {
-                        //                     Auth.currentUser().then(function ()
-                        //                     {
-                        //                         $state.go("landing");
-                        //                     });
-                        //                 }]
+                        "templateUrl" : "js/auth/login.html"
                     }
                 )
                 .state
@@ -45,16 +46,17 @@
                     {
                         "url"         : "/signup",
                         "controller"  : "AuthCtrl as auth",
-                        "templateUrl" : "js/auth/signup.html"//,
-                        // "onEnter"     : ["$state", "Auth", function ($state, Auth)
-                        //                 {
-                        //                     Auth.currentUser().then(function ()
-                        //                     {
-                        //                         $state.go("landing");
-                        //                     });
-                        //                 }]
+                        "templateUrl" : "js/auth/signup.html"
                     }
                 )
-
+                .state
+                (
+                    "users",
+                    {
+                        "url"         : "/users",
+                        "controller"  : "UserCtrl as users",
+                        "templateUrl" : "js/user/users.html"
+                    }
+                )
         })
 })();
