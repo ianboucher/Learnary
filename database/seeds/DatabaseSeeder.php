@@ -18,11 +18,11 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->delete();
 
         $users = [
-            ['name' => 'Bert',   'email' => 'bert@user.com',   'password' => 'password' ],
-            ['name' => 'Ernie',  'email' => 'ernie@user.com',  'password' => 'password' ],
-            ['name' => 'Calvin', 'email' => 'calvin@user.com', 'password' => 'password' ],
-            ['name' => 'Hobbes', 'email' => 'hobbes@user.com', 'password' => 'password' ],
-            ['name' => 'admin',  'email' => 'admin@user.com',  'password' => 'password' ]
+            ['name' => 'Bert',   'email' => 'bert@user.com',   'password' => Hash::make('secret') ],
+            ['name' => 'Ernie',  'email' => 'ernie@user.com',  'password' => Hash::make('secret') ],
+            ['name' => 'Calvin', 'email' => 'calvin@user.com', 'password' => Hash::make('secret') ],
+            ['name' => 'Hobbes', 'email' => 'hobbes@user.com', 'password' => Hash::make('secret') ],
+            ['name' => 'admin',  'email' => 'admin@user.com',  'password' => Hash::make('secret') ]
         ];
 
         foreach ($users as $user)
