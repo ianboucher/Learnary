@@ -1,15 +1,17 @@
-<div class="container">
-    <div class="col-sm-6 col-sm-offset-3">
+<ng-include src="'js/nav/navbar_top.html'"></ng-include>
+
+<div class="container vertical-align">
+    <div class="col-xs-6 col-xs-offset-3">
         <h3>Sign Up</h3>
         <form>
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Username" ng-model="signup.username">
+                <input type="text" class="form-control" placeholder="Username" ng-model="credentials.name">
             </div>
             <div class="form-group">
-                <input type="email" class="form-control" placeholder="Email" ng-model="signup.email">
+                <input type="email" class="form-control" placeholder="Email" ng-model="credentials.email">
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" placeholder="Password" ng-model="signup.password">
+                <input type="password" class="form-control" placeholder="Password" ng-model="credentials.password">
             </div>
             <button class="btn btn-primary" ng-click="signup.signup()">Sign Me Up!</button>
         </form>

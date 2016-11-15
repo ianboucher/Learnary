@@ -40,6 +40,8 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.2.0/ui-bootstrap-tpls.min.js"></script>
     <script src="//cdn.jsdelivr.net/satellizer/0.15.5/satellizer.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bean/1.0.15/bean.min.js"></script>
+
 
     <!-- APPLICATION SCRIPTS -->
     <script src="/js/app.js"></script>
@@ -48,6 +50,7 @@
     <script src="/js/auth/LoginCtrl.js"></script>
     <script src="/js/auth/SignupCtrl.js"></script>
     <script src="/js/user/UserCtrl.js"></script>
+    <script src="/js/services/eventService.js"></script>
 
 </body>
 </html>

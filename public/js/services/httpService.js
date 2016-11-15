@@ -1,5 +1,5 @@
 angular
-    .module("commentApp")
+    .module("learnary")
     .service("httpService", ["$http",
         function httpService($http)
         {
