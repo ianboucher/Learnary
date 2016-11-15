@@ -45,7 +45,8 @@
     <script src="/js/app.js"></script>
     <script src="/js/landing/LandingCtrl.js"></script>
     <script src="/js/nav/NavCtrl.js"></script>
-    <script src="/js/auth/AuthCtrl.js"></script>
+    <script src="/js/auth/LoginCtrl.js"></script>
+    <script src="/js/auth/SignupCtrl.js"></script>
     <script src="/js/user/UserCtrl.js"></script>
 
 </body>

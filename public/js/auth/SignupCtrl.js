@@ -4,26 +4,28 @@
 
     angular
         .module("learnary")
-        .controller("AuthCtrl", ["$auth", "$state",
-            function AuthCtrl($auth, $state)
+        .controller("SignupCtrl", ["$auth", "$state",
+            function SignupCtrl($auth, $state)
             {
                 var self = this;
 
-                self.login = function()
+                self.signup = function()
                 {
                     var credentials = {
+                        "name"     : self.username,
                         "email"    : self.email,
                         "password" : self.password
                     };
 
-                    $auth.login(credentials).then(function(response)
+                    $auth.signup(credentials).then(function(response)
                     {
+                        console.log(response.config.url);
                         $state.go("users", {});
                     })
                     .catch(function(error)
                     {
-                        console.log(error); // TO-DO: Handle error properly (how?)
-                        window.alert("Login failed - email or password are incorrect")
+                        console.log(error); // TODO: Handle error properly (how?)
+                        window.alert("Signup failed - email or password are incorrect")
                     });
                 };
             }

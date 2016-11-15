@@ -15,7 +15,9 @@
 
             // Satellizer configuration that specifies which API
             // route the JWT should be retrieved from
-            $authProvider.loginUrl = "/api/v1.0.0/authenticate";
+            $authProvider.loginUrl = "/api/v1.0.0/login";
+            $authProvider.signupUrl = "/api/v1.0.0/signup";
+
 
             // Redirect to the auth state if any other states
             // are requested other than users
@@ -36,7 +38,7 @@
                     "login",
                     {
                         "url"         : "/login",
-                        "controller"  : "AuthCtrl as auth",
+                        "controller"  : "LoginCtrl as login",
                         "templateUrl" : "js/auth/login.html"
                     }
                 )
@@ -45,7 +47,7 @@
                     "signup",
                     {
                         "url"         : "/signup",
-                        "controller"  : "AuthCtrl as auth",
+                        "controller"  : "SignupCtrl as signup",
                         "templateUrl" : "js/auth/signup.html"
                     }
                 )
