@@ -69,4 +69,42 @@ class AuthenticateController extends Controller
         // if no errors are encountered, return a JWT
         return response()->json(compact('token'));
     }
+
+    public function createRole(Request $request)
+    {
+        $role = new Role();
+        $role->name = $request->get('name');
+        $role->save();
+
+        return response()->json('created');
+    }
+
+    public function createPermission(Request $request)
+    {
+        $permission = new Permission();
+        $permission->name = $request->get('name');
+        $permission->save();
+
+        return response()->json('created')
+    }
+
+    public function assignRole(Request $request)
+    {
+        $user = User::where('email', '=', $request->get('email'))->first();
+        $role = Role::where('name', '=', $request->get('role'))->first();
+
+        $user->roles()->attach($role->id);
+
+        return response()->json('created');
+    }
+
+    public function attachPermission(Request $request)
+    {
+        $role = Role::where('name', '=', $request->get('role'))->first();
+        $permission = Permission::where('name', '=', $request->get('name'))->first();
+
+        $role->attachPermission($permission);
+
+        return response()->json('created');
+    }
 }
