@@ -4,8 +4,8 @@
 
     angular
         .module("learnary")
-        .controller("LoginCtrl", ["$scope", "$rootScope", "$auth", "$state",
-            function LoginCtrl($scope, $rootScope, $auth, $state)
+        .controller("LoginCtrl", ["$scope", "$auth", "$state", "SessionService",
+            function LoginCtrl($scope, $rootScope, $auth, $state, SessionService)
             {
                 var self = this;
 
@@ -13,7 +13,11 @@
                 {
                     $auth.login($scope.credentials).then(function(response)
                     {
-                        $rootScope.$broadcast("login", $scope.credentials);
+                        console.log(response);
+                        SessionService.getUser($scope.credentials.email)
+                        SessionService.getRoles($scope.credentials.email)
+                        // SessionService.getPermissions($scope.credentials.email)
+
                         $state.go("users", {});
                     })
                     .catch(function(error)

@@ -13,6 +13,7 @@
                 {
                     $auth.signup($scope.credentials).then(function(response)
                     {
+                        console.log(response);
                         $state.go("users", {});
                     })
                     .catch(function(error)

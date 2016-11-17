@@ -24,7 +24,8 @@ Route::group(["prefix" => "v1.0.0"], function()
     // Entrust::routeNeedsPermission('admin/post*', 'create-post');
     // Entrust::routeNeedsRole('admin/advanced*', 'owner');
 
-    Route::post('users', 'UsersController@create');
+    Route::post('signup', 'UsersController@create');
+    Route::get('users/show', 'UsersController@show');
 
     Route::post('login', 'AuthenticateController@login');
 
@@ -37,7 +38,6 @@ Route::group(["prefix" => "v1.0.0"], function()
     Route::get('permissions', 'PermissionsController@check');
 });
 
-Route::get('users', 'UsersController@index');
 
 // TODO: the following method of protecting routes with Entrust's 'ability' should
 // work, but middleware has been modified to use JWT, so not sure if that is preventing it

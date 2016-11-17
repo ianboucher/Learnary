@@ -49,4 +49,12 @@ class UsersController extends Controller
 
         return response()->json(compact('token'));
     }
+
+
+    public function show(Request $request)
+    {
+        $user = User::where('email', '=', $request->get('email'))->first();
+
+        return $user;
+    }
 }

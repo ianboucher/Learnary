@@ -4,12 +4,12 @@
 
     angular
         .module("learnary")
-        .controller("NavCtrl", ["$scope", "$rootScope", "$auth", "$state",
-            function NavCtrl($scope, $rootScope, $auth, $state)
+        .controller("NavCtrl", ["$scope", "$rootScope", "$auth", "$state", "SessionService",
+            function NavCtrl($scope, $rootScope, $auth, $state, SessionService)
             {
-                $scope.isAuthenticated = $auth.isAuthenticated();
+                var self = this;
 
-                var currentUser = {};
+                $scope.isAuthenticated = $auth.isAuthenticated();
 
                 $scope.logout = function()
                 {
@@ -17,12 +17,10 @@
                     $state.go("landing");
                 }
 
-                $rootScope.$on("login", function(event, data)
+                $rootScope.$on("login", function(event)
                 {
-                    currentUser.email  = data.email;
-                    $scope.currentUser = currentUser; // TODO: Find out why the f***********ck this won't update in the view!
-                                                      // Tried using $scope.$apply - error message saying digest already in
-                                                      // progress, so I don't know why no update in view.
+                    // TODO: Find out why the f***********ck this value disappears when I refresh
+                    $scope.currentUser = SessionService.currentUser;
                 });
 
             }
