@@ -13,25 +13,36 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:api');
+// Route::get('/user', function (Request $request) {
+//     return $request->user();
+// })->middleware('auth:api');
 
 // API ROUTES ==================================
-Route::group(["prefix" => "/v1.0.0"], function()
+Route::group(["prefix" => "v1.0.0"], function()
 {
-    // Route::resource('authenticate', 'AuthenticateController', ['only' => ['index']]);
-    Route::post('signup', 'AuthenticateController@signup');
+    // Entrust provides route filters like the following (see docs):
+    // Entrust::routeNeedsPermission('admin/post*', 'create-post');
+    // Entrust::routeNeedsRole('admin/advanced*', 'owner');
+
+    Route::post('users', 'UsersController@create');
+
     Route::post('login', 'AuthenticateController@login');
 
-    Route::post('role', 'AuthenticateController@createRole');
-    Route::post('permission', 'AuthenticateController@createPermission');
-    Route::post('assign-role', 'AuthenticateController@assignRole');
-    Route::post('attach-permission', 'AuthenticateController@attachPermission');
+    Route::put('roles', 'RolesController@create');
+    Route::post('roles', 'RolesController@assign');
+    Route::get('roles', 'RolesController@check');
 
+    Route::put('permissions', 'PermissionsController@create');
+    Route::post('permissions', 'PermissionsController@attach');
+    Route::get('permissions', 'PermissionsController@check');
 });
 
-Route::group(["prefix" => "v1.0.0", "middleware" => ['ability:admin,create-users']], function()
-{
-    Route::get('users', 'AuthenticateController@index');
-});
+Route::get('users', 'UsersController@index');
+
+// TODO: the following method of protecting routes with Entrust's 'ability' should
+// work, but middleware has been modified to use JWT, so not sure if that is preventing it
+
+// Route::group(["prefix" => "v1.0.0", "middleware" => ['ability:admin,listUsers']], function()
+// {
+//     Route::get('users', 'UsersController@index');
+// });

@@ -4,8 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Tymon\JWTAuth\Exceptions\JWTException;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Tymon\JWTAuth\Exceptions\BaseMiddleware;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Tymon\JWTAuth\Middleware\BaseMiddleware;
 
 class TokenEntrustAbility extends BaseMiddleware
 {
@@ -23,6 +23,7 @@ class TokenEntrustAbility extends BaseMiddleware
             return $this->respond('tymon.jwt.absent', 'token_not_provided', 400);
         }
 
+
         try
         {
             $user = $this->auth->authenticate($token);
@@ -35,6 +36,7 @@ class TokenEntrustAbility extends BaseMiddleware
         {
             return $this->respond('tymon.jwt.invalid', 'token_invalid', $error->getStatusCode(), [$error]);
         }
+
 
         if (!$user)
         {
