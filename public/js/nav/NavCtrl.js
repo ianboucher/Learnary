@@ -19,7 +19,7 @@
 
                 $rootScope.$on("login", function(event)
                 {
-                    // TODO: Find out why the f***********ck this value disappears when I refresh
+                    // QUESTION: Why does this value disappear from the scope on page refresh?
                     $scope.currentUser = SessionService.currentUser;
                 });
 

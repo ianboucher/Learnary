@@ -5,7 +5,7 @@
         <h3>Users</h3>
         <button class="btn btn-primary" style="margin-bottom: 10px" ng-click="users.getUsers()">Get Users!</button>
         <ul class="list-group" ng-if="users.userData">
-            <li class="list-group-item" ng-repeat="user in users.userData">
+            <li class="list-group-item" ng-repeat="user in users.userData track by $index">
                 <h4>{{user.name}}</h4>
                 <h5>{{user.email}}</h5>
             </li>

@@ -14,7 +14,7 @@
 
                 self.getUsers = function()
                 {
-                    $http.get("api/v1.0.0/authenticate").then(
+                    $http.get("api/v1.0.0/users").then(
                         function(users)
                         {
                             self.userData = users.data;

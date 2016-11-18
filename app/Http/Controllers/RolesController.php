@@ -31,7 +31,8 @@ class RolesController extends Controller
 
     public function assign(Request $request)
     {
-        $user = User::where('email', '=', $request->get('email'))->first();
+        // $user = User::where('email', '=', $request->get('email'))->first();
+        $user = JWTAuth::parseToken()->authenticate();
         $role = Role::where('name', '=', $request->get('role'))->first();
 
         $user->roles()->attach($role->id);

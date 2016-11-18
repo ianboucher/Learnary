@@ -26,6 +26,7 @@ Route::group(["prefix" => "v1.0.0"], function()
 
     Route::post('signup', 'UsersController@create');
     Route::get('users/show', 'UsersController@show');
+    Route::get('users', 'UsersController@index');
 
     Route::post('login', 'AuthenticateController@login');
 

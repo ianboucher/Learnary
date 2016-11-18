@@ -12,45 +12,60 @@
                 self.loginError = false;
                 self.loginErrorText;
 
+                // QUESTION: As the User/Role/Permission data are handled by
+                // different controllers, I've performed 3 separate HTTP requests
+                // to retrieve the currentUser data. Is this OK? It seems somewhat
+                // inefficent...
+
+                // QUESTION: What else should I include in my SessionService at
+                // the moment?
+
                 self.login = function(credentials)
                 {
-                    $auth.login(credentials).then(
+                    $auth.login(credentials).then (
+
                         function()
                         {
-                            // Return request to allow '.then' chain to be flattened
                             return $http.get("api/v1.0.0/users/show");
                         },
                         function(error)
                         {
                             // TODO: Handle error properly
-                            self.loginError = true;
+                            // QUESTION: What's the best way to hanlde these kind of errors?
+                            self.loginError     = true;
                             self.loginErrorText = error.data.error;
-                            window.alert("Email or password invalid")
+                            window.alert("Email or password invalid");
                         }
-                    ).then (
+                    ).then ( // Retrieve the authenticated current user
+
                         function(users)
                         {
-                            self.currentUser = users.data.user;
-
-                            self.authenticated = true;
-
+                            self.currentUser   = users.data.user;
+                            self.authenticated = $auth.isAuthenticated();
                             $state.go("users");
 
-                            // TODO: Store user in browser's localStorage?
+                            // QUESTION: Should I store user in browser's localStorage?
 
                             return $http.get("api/v1.0.0/roles");
                         }
-                    ).then (
+                    ).then ( // Retrieve the current user's roles
+
                         function(roles)
                         {
+                            // TODO: Consider checking roles by email rather than
+                            // by getting the user from the token. This would
+                            // allow an admin to retrieve roles belonging to other
+                            // users.
                             self.currentUser.roles = roles.data;
 
-                            return $http.get("api/v1.0.0/permissions")
+                            return $http.get("api/v1.0.0/permissions");
                         }
-                    ).then (
+                    ).then ( // Retrieve the current user's permissions
+
                         function(permissions)
                         {
                             self.currentUser.permissions = permissions.data;
+                            $rootScope.$broadcast("login");
                         }
                     );
                 };
@@ -58,7 +73,7 @@
 
                 self.logout = function()
                 {
-                    $auth.logout().then(
+                    $auth.logout().then (
                         function(response)
                         {
                             self.currentUser   = null;
@@ -84,29 +99,6 @@
                 {
                     return self.currentUser.permissions.hasOwnProperty(permission);
                 }
-
-
-
-
-
-
-
-                // self.getUser = function(email)
-                // {
-                //     // TODO: There HAS to be a better way to do this!!
-                //     $http.get("/api/v1.0.0/users/show?email=" + email ).then (
-                //
-                //         function(response)
-                //         {
-                //             self.currentUser = response.data;
-                //             $rootScope.$broadcast("login");
-                //         },
-                //         function(error)
-                //         {
-                //             throw error;
-                //         }
-                //     );
-                // };
 
                 return self;
             }
