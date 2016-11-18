@@ -53,8 +53,28 @@ class UsersController extends Controller
 
     public function show(Request $request)
     {
-        $user = User::where('email', '=', $request->get('email'))->first();
+        try
+        {
+            if (! $user = JWTAuth::parseToken()->authenticate())
+            {
+                return response()->json(['user_not_found'], 404);
+            }
+        }
+        catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $error)
+        {
+            return response()->json(['token_expired'], $error->getStatusCode());
+        }
+        catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $error)
+        {
+            return response()->json(['token_invalid'], $error->getStatusCode());
+        }
+        catch (Tymon\JWTAuth\Exceptions\JWTException $error)
+        {
+            return response()->json(['token_absent'], $error->getStatusCode());
+        }
 
-        return $user;
+        // the token is valid and user has been found via the sub claim
+        return response()->json(compact('user'));
+
     }
 }

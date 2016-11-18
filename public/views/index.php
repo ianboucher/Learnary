@@ -45,12 +45,12 @@
 
     <!-- APPLICATION SCRIPTS -->
     <script src="/js/app.js"></script>
+    <script src="/js/services/SessionService.js"></script>
     <script src="/js/landing/LandingCtrl.js"></script>
     <script src="/js/nav/NavCtrl.js"></script>
     <script src="/js/auth/LoginCtrl.js"></script>
     <script src="/js/auth/SignupCtrl.js"></script>
     <script src="/js/user/UserCtrl.js"></script>
-    <script src="/js/services/SessionService.js"></script>
 
 </body>
 </html>
