@@ -17,11 +17,11 @@ class Group extends Model
 
     public function users()
     {
-        return $this->hasMany('App/User');
+        return $this->hasMany('App\User');
     }
 
     public function school()
     {
-        return $this->belongsTo('App/School');
+        return $this->belongsTo('App\School');
     }
 }

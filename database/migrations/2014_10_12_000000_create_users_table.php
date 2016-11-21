@@ -15,6 +15,11 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
+            // QUESTION: The following doesn't work - how should I be specifying foreign
+            // keys for this king of relationship?
+            // $table->foreign('group_id')->references('id')->on('groups')->nullable();
+            $table->integer('group_id')->nullable();
+            $table->integer('school_id')->nullable();
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');

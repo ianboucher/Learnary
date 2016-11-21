@@ -15,13 +15,14 @@ class School extends Model
         'name'
     ];
 
-    public function users()
-    {
-        return $this->hasMany('App/User');
-    }
 
     public function groups()
     {
-        return $this->hasMany('App/Group');
+        return $this->hasMany('App\Group');
+    }
+
+    public function users()
+    {
+        return $this->hasManyThrough('App\User', 'App\Group');
     }
 }

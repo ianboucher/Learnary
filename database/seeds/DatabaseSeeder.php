@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use App\School;
+use App\Group;
 use App\User;
 
 class DatabaseSeeder extends Seeder
@@ -16,19 +18,43 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
 
         DB::table('users')->delete();
+        DB::table('schools')->delete();
+        DB::table('groups')->delete();
 
-        $users = [
-            ['name' => 'Bert',   'email' => 'bert@user.com',   'password' => Hash::make('secret') ],
-            ['name' => 'Ernie',  'email' => 'ernie@user.com',  'password' => Hash::make('secret') ],
-            ['name' => 'Calvin', 'email' => 'calvin@user.com', 'password' => Hash::make('secret') ],
-            ['name' => 'Hobbes', 'email' => 'hobbes@user.com', 'password' => Hash::make('secret') ],
-            ['name' => 'admin',  'email' => 'admin@user.com',  'password' => Hash::make('secret') ]
+        // ========================= CREATE SCHOOLS ============================
+
+        $schools = [
+            ['name' => 'Grange Hill'],
+            ['name' => 'Springfield Elementary'],
         ];
 
-        foreach ($users as $user)
+        foreach ($schools as $school)
         {
-            User::create($user);
+            School::create($school);
         }
+
+        // ================== CREATE GROUPS & ADD TO SCHOOL ====================
+
+        $currentSchool = App\School::find(1);
+
+        $currentSchool->groups()->saveMany([
+            new Group(['name' => '1W']),
+            new Group(['name' => '2H']),
+            new Group(['name' => '3M']),
+            new Group(['name' => '4F']),
+        ]);
+
+        // =================== CREATE USERS & ADD TO GROUP =====================
+
+        $currentGroup = App\Group::find(2);
+
+        $currentGroup->users()->saveMany([
+            new User(['name' => 'Bert',   'email' => 'bert@user.com',   'password' => Hash::make('secret') ]),
+            new User(['name' => 'Ernie',  'email' => 'ernie@user.com',  'password' => Hash::make('secret') ]),
+            new User(['name' => 'Calvin', 'email' => 'calvin@user.com', 'password' => Hash::make('secret') ]),
+            new User(['name' => 'Hobbes', 'email' => 'hobbes@user.com', 'password' => Hash::make('secret') ]),
+            new User(['name' => 'admin',  'email' => 'admin@user.com',  'password' => Hash::make('secret') ]),
+        ]);
 
         Model::reguard();
     }

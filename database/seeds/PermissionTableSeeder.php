@@ -14,48 +14,29 @@ class PermissionTableSeeder extends Seeder
     {
         $permission = [
             [
-                'name' => 'role-list',
-                'display_name' => 'Display Role Listing',
-                'description' => 'See only Listing Of Role'
+                'name'         => 'manage-school',
+                'display_name' => 'Manage Schools',
+                'description'  => 'Create, edit and list schools'
             ],
             [
-                'name' => 'role-create',
-                'display_name' => 'Create Role',
-                'description' => 'Create New Role'
+                'name'         => 'manage-group',
+                'display_name' => 'Manage Groups',
+                'description'  => 'Create, edit and list groups within a school'
             ],
             [
-                'name' => 'role-edit',
-                'display_name' => 'Edit Role',
-                'description' => 'Edit Role'
+                'name'         => 'manage-user',
+                'display_name' => 'Manage Users',
+                'description'  => 'Assign roles, permissions and view users'
             ],
             [
-                'name' => 'role-delete',
-                'display_name' => 'Delete Role',
-                'description' => 'Delete Role'
+                'name'         => 'View user',
+                'display_name' => 'View User Data',
+                'description'  => 'View user data, such a scores, progress, activity etc.'
             ],
-            [
-                'name' => 'item-list',
-                'display_name' => 'Display Item Listing',
-                'description' => 'See only Listing Of Item'
-            ],
-            [
-                'name' => 'item-create',
-                'display_name' => 'Create Item',
-                'description' => 'Create New Item'
-            ],
-            [
-                'name' => 'item-edit',
-                'display_name' => 'Edit Item',
-                'description' => 'Edit Item'
-            ],
-            [
-                'name' => 'item-delete',
-                'display_name' => 'Delete Item',
-                'description' => 'Delete Item'
-            ]
         ];
 
-        foreach ($permission as $key => $value) {
+        foreach ($permission as $key => $value)
+        {
             Permission::create($value);
         }
     }
