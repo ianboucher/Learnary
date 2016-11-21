@@ -57,5 +57,5 @@ class RolesController extends Controller
         ]));
     }
 
-    // TODO: is there a method for changing roles once assigned?
+    // QUESTION: is there a method for changing roles once assigned?
 }

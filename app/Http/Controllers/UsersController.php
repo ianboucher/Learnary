@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\User;
+use App\Group;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
@@ -27,14 +28,35 @@ class UsersController extends Controller
         return $users;
     }
 
+    // QUESTION: How to I structure this method properly so that users can sign-up
+    // either as individuals, or as part of a school/group?
 
     public function create(Request $request)
     {
         $credentials = [
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
+            'name'     => $request->get('name'),
+            'email'    => $request->get('email'),
             'password' => bcrypt($request->get('password'))
         ];
+
+        if ($request->has('group'))
+        {
+            if ($group = Group::where('name', '=', $request->get('group'))->first());
+            {
+                try
+                {
+                    $user = $group->users()->create($credentials);
+                }
+                catch (JWTException $error)
+                {
+                    return response()->json(['error' => 'User already exists'], HttpResponse::HTTP_CONFLICT);
+                }
+
+                $token = JWTAuth::fromUser($user);
+
+                return response()->json(compact('token'));
+            }
+        }
 
         try
         {
@@ -49,6 +71,7 @@ class UsersController extends Controller
 
         return response()->json(compact('token'));
     }
+
 
 
     public function show(Request $request)

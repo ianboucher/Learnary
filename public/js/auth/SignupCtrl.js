@@ -29,8 +29,6 @@
 
                 self.signup = function()
                 {
-                    console.log($scope.credentials);
-
                     $auth.signup($scope.credentials).then (
 
                         function(response)
