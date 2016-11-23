@@ -53,6 +53,15 @@
                 )
                 .state
                 (
+                    "orientation",
+                    {
+                        "url"         : "/orientation",
+                        "controller"  : "OrientationCtrl as orientation",
+                        "templateUrl" : "js/orientation/orientation.html"
+                    }
+                )
+                .state
+                (
                     "users",
                     {
                         "url"         : "/users",

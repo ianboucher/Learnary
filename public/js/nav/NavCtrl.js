@@ -4,22 +4,22 @@
 
     angular
         .module("learnary")
-        .controller("NavCtrl", ["$scope", "$rootScope", "$auth", "$state", "SessionService",
-            function NavCtrl($scope, $rootScope, $auth, $state, SessionService)
+        .controller("NavCtrl", ["$scope", "$rootScope", "SessionService",
+            function NavCtrl($scope, $rootScope, SessionService)
             {
                 var self = this;
 
-                $scope.isAuthenticated = $auth.isAuthenticated();
+                $scope.currentUser     = SessionService.currentUser;
+                $scope.isAuthenticated = SessionService.isAuthenticated;
 
                 $scope.logout = function()
                 {
-                    $auth.logout();
-                    $state.go("landing");
-                }
+                    SessionService.logout();
+                    $scope.isAuthenticated = false;
+                };
 
                 $rootScope.$on("login", function(event)
                 {
-                    // QUESTION: Why does this value disappear from the scope on page refresh?
                     $scope.currentUser = SessionService.currentUser;
                 });
 

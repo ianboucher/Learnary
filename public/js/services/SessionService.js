@@ -4,10 +4,22 @@
 
     angular
         .module("learnary")
-        .service("SessionService", ["$http", "$rootScope", "$auth", "$state",
-            function SessionService($http, $rootScope, $auth, $state)
+        .service("SessionService", ["$http", "$rootScope", "$auth", "$state", "$window",
+            function SessionService($http, $rootScope, $auth, $state, $window)
             {
                 var self = this;
+
+                self.isAuthenticated = false;
+
+                if ($window.localStorage["currentUser"])
+                {
+                    // QUESTION: What should I do here to handle the situation
+                    // where a previous user hasn't logged-out, leaving their data
+                    // in localStorage?
+                    self.currentUser = JSON.parse($window.localStorage["currentUser"]);
+                    self.isAuthenticated = $auth.isAuthenticated();
+                }
+
 
                 self.loginError = false;
                 self.loginErrorText;
@@ -20,7 +32,7 @@
                 // QUESTION: What else should I include in my SessionService at
                 // the moment?
 
-                self.login = function(credentials)
+                self.login = function(credentials, nextState)
                 {
                     $auth.login(credentials).then (
 
@@ -40,11 +52,8 @@
 
                         function(users)
                         {
-                            self.currentUser   = users.data.user;
-                            self.authenticated = $auth.isAuthenticated();
-                            $state.go("users");
-
-                            // QUESTION: Should I store user in browser's localStorage?
+                            self.currentUser     = users.data.user;
+                            self.isAuthenticated = $auth.isAuthenticated();
 
                             return $http.get("api/v1.0.0/roles");
                         }
@@ -66,6 +75,12 @@
                         {
                             self.currentUser.permissions = permissions.data;
                             $rootScope.$broadcast("login");
+                            $window.localStorage.setItem("currentUser", angular.toJson(self.currentUser));
+
+                            if (nextState)
+                            {
+                                $state.go(nextState);
+                            }
                         }
                     );
                 };
@@ -74,10 +89,12 @@
                 self.logout = function()
                 {
                     $auth.logout().then (
+
                         function(response)
                         {
-                            self.currentUser   = null;
-                            self.authenticated = false;
+                            $window.localStorage.removeItem("currentUser");
+                            self.currentUser     = null;
+                            self.isAuthenticated = false;
                             $state.go("landing");
                         },
                         function(error)

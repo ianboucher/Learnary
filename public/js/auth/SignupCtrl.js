@@ -4,8 +4,8 @@
 
     angular
         .module("learnary")
-        .controller("SignupCtrl", ["$scope", "$auth", "$http", "$state", "SessionService",
-            function SignupCtrl($scope, $auth, $http, $state, SessionService)
+        .controller("SignupCtrl", ["$scope", "$auth", "$http", "SessionService",
+            function SignupCtrl($scope, $auth, $http, SessionService)
             {
                 var self = this;
                 $scope.credentials = {};
@@ -52,8 +52,7 @@
 
                         function(response)
                         {
-                            SessionService.login($scope.credentials);
-                            $state.go("users", {});
+                            SessionService.login($scope.credentials, "orientation");
                         }
                     );
                 };

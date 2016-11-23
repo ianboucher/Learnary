@@ -4,14 +4,14 @@
 
     angular
         .module("learnary")
-        .controller("LoginCtrl", ["$scope", "$auth", "$state", "SessionService",
-            function LoginCtrl($scope, $auth, $state, SessionService)
+        .controller("LoginCtrl", ["$scope", "SessionService",
+            function LoginCtrl($scope, SessionService)
             {
                 var self = this;
 
                 self.login = function()
                 {
-                    SessionService.login($scope.credentials);
+                    SessionService.login($scope.credentials, "users");
                 };
             }
         ]);

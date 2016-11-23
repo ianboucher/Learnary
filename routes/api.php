@@ -39,7 +39,7 @@ Route::group(["prefix" => "v1.0.0"], function()
     Route::get('permissions', 'PermissionsController@check');
 
     Route::resource('schools', 'SchoolsController');
-    Route::resource('groups', 'GroupsController')
+    Route::resource('groups', 'GroupsController');
 });
 
 

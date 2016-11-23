@@ -14,11 +14,12 @@ html {
 /* Padding below the footer and lighter body text */
 
 body {
-  padding-bottom: 40px;
-  color: #5a5a5a;
+    padding-bottom: 40px;
+    color: #5a5a5a;
 }
 
 .container {
+    padding-top: 40px;
     margin: 0 auto; /* as only 2 args given, auto determines L & R margin size here */
     max-width: 64rem;
 }
@@ -44,8 +45,12 @@ body {
     clear: both;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 768px) {
     html { font-size: 112%; }
+
+    .container {
+        padding-top: 70px;
+    }
 
     .column {
         float: left; /* ensures column elements stick to L side of its container */

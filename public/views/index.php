@@ -50,6 +50,7 @@
     <script src="/js/nav/NavCtrl.js"></script>
     <script src="/js/auth/LoginCtrl.js"></script>
     <script src="/js/auth/SignupCtrl.js"></script>
+    <script src="/js/orientation/OrientationCtrl.js"></script>
     <script src="/js/user/UserCtrl.js"></script>
 
 </body>
