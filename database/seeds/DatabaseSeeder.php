@@ -6,6 +6,8 @@ use App\School;
 use App\Group;
 use App\User;
 use App\Role;
+use App\Permission;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -81,6 +83,37 @@ class DatabaseSeeder extends Seeder
         {
             Role::create($value);
         }
+
+        // ======================= CREATE PERMISSIONS ==========================
+
+        $permission = [
+            [
+                'name'         => 'manage-school',
+                'display_name' => 'Manage Schools',
+                'description'  => 'Create, edit and list schools'
+            ],
+            [
+                'name'         => 'manage-group',
+                'display_name' => 'Manage Groups',
+                'description'  => 'Create, edit and list groups within a school'
+            ],
+            [
+                'name'         => 'manage-user',
+                'display_name' => 'Manage Users',
+                'description'  => 'Assign roles, permissions and view users'
+            ],
+            [
+                'name'         => 'view-user',
+                'display_name' => 'View User Data',
+                'description'  => 'View user data, such as scores, progress, activity etc.'
+            ],
+        ];
+
+        foreach ($permission as $key => $value)
+        {
+            Permission::create($value);
+        }
+
 
         Model::reguard();
     }

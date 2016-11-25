@@ -4,15 +4,15 @@
 
     angular
         .module("learnary")
-        .controller("UserCtrl", ["$http",
-            function UserCtrl($http)
+        .controller("UserCtrl", ["$scope", "$http", "$uibModal",
+            function UserCtrl($scope, $http, $uibModal)
             {
                 var self = this;
 
                 self.userData;
                 self.error;
 
-                $http.get("api/v1.0.0/users").then(
+                $http.get("api/v1.0.0/users").then (
                     function(users)
                     {
                         self.userData = users.data;
@@ -20,10 +20,50 @@
                     function(error)
                     {
                         self.error = error.data.error;
-                        console.log(errorData); // TODO: handle error properly
+                        console.log(self.error); // TODO: handle error properly
                         // window.alert("Unable to retrieve user data")
                     }
                 );
+
+
+                $http.get("api/v1.0.0/roles/all").then (
+                    function(roles)
+                    {
+                        self.roles = roles.data;
+                    },
+                    function(error)
+                    {
+                        self.error = error.data.error;
+                        console.log(self.error); // TODO: handle error properly
+                    }
+                );
+
+
+                $scope.launchModal = function(user)
+                {
+                    var modalInstance = $uibModal.open(
+                    {
+                        templateUrl : "/js/modal/modal.html",
+                        controller  : "ModalCtrl",
+                        scope       : $scope,
+                        resolve:
+                        {
+                            roles: function()
+                            {
+                                return self.roles;
+                            },
+                            user: function()
+                            {
+                                return user;
+                            }
+                        }
+                    });
+
+                    modalInstance.result.then(function(roles)
+                    {
+                        user.roles = roles;
+                    })
+                };
             }
         ]);
 })();

@@ -18,10 +18,19 @@ class RolesController extends Controller
     }
 
 
+    public function index()
+    {
+        $roles = Role::with('perms')->get();
+        return $roles;
+    }
+
+
     public function create(Request $request)
     {
         $role = new Role();
-        $role->name = $request->get('name');
+        $role->name         = $request->get('name');
+        $role->display_name = $request->get('display-name');
+        $role->description  = $request->get('description');
         $role->save();
 
         return response()->json('Role created');
@@ -29,15 +38,14 @@ class RolesController extends Controller
 
     // TODO: are there verbs compatible with REST that could be used here?
 
-    public function assign(Request $request)
+    public function update(Request $request)
     {
-        // $user = User::where('email', '=', $request->get('email'))->first();
-        $user = JWTAuth::parseToken()->authenticate();
-        $role = Role::where('name', '=', $request->get('role'))->first();
+        $user = User::where('email', '=', $request->get('email'))->first();
+        // $user = JWTAuth::parseToken()->authenticate();
+        $role_ids = $request->get('roles');
+        $user->roles()->sync($role_ids);
 
-        $user->roles()->attach($role->id);
-
-        return response()->json('Role assigned');
+        return response()->json($user->roles);
     }
 
 
@@ -56,6 +64,4 @@ class RolesController extends Controller
             'student'   => $user->hasRole('student')
         ]));
     }
-
-    // QUESTION: is there a method for changing roles once assigned?
 }

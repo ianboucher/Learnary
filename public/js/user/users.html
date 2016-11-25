@@ -23,8 +23,12 @@
                         <td>{{user.email}}</td>
                         <td></td>
                         <td></td>
-                        <td><label class="label label-success">{{user.roles[0].display_name}}<label></td>
-                        <td><button class="btn btn-primary">Edit</button></td>
+                        <td>
+                            <label class="label label-success" ng-repeat="role in user.roles track by $index">
+                                {{role.display_name}}
+                            <label>
+                        </td>
+                        <td><button class="btn btn-primary" ng-click="launchModal(user)">Edit</button></td>
                     </tr>
                 </tbody>
             </table>

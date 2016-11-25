@@ -41,7 +41,10 @@
                             // how could I stop students signing up as staff and
                             // getting the associated permissions?
 
-                            return $http.post("/api/v1.0.0/roles", { role: $scope.credentials.role } );
+                            // TODO: Revise this request - API expects an array of
+                            // role_ids as this makes subsequent modifcation easier
+
+                            return $http.post("/api/v1.0.0/roles", { roles: $scope.credentials.role } );
                         },
                         function(error)
                         {

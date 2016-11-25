@@ -1,0 +1,35 @@
+
+<div class="modal-header">
+    <h3>I'm a modal!</h3>
+</div>
+
+<form ng-submit="submit()">
+    <div class="modal-body">
+
+        <div class="table-repsonsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Role</th>
+                        <th>Description</th>
+                        <th>Assigned</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="role in $resolve.roles track by $index">
+                        <td>{{role.display_name}}</td>
+                        <td>{{role.description}}</td>
+                        <td><input type="checkbox" class="checkbox pull-right" ng-model="currentRoleIds[role.id]"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        <input type="submit" class="btn primary-btn" value="Submit" />
+    </div>
+</form>

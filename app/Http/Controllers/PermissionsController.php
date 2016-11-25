@@ -19,10 +19,18 @@ class PermissionsController extends Controller
         $this->middleware('jwt.auth');
     }
 
+    public function index()
+    {
+        $permissions = Permission::all();
+        return $permissions;
+    }
+
     public function create(Request $request)
     {
         $permission = new Permission();
-        $permission->name = $request->get('name');
+        $permission->name        = $request->get('name');
+        $permission->displayName = $request->get('display-name');
+        $permission->description = $request->get('description');
         $permission->save();
 
         return response()->json('Permission created');
@@ -33,10 +41,12 @@ class PermissionsController extends Controller
 
     public function attach(Request $request)
     {
-        $role = Role::where('name', '=', $request->get('role'))->first();
+        $role       = Role::where('name', '=', $request->get('role'))->first();
         $permission = Permission::where('name', '=', $request->get('permission'))->first();
 
         $role->attachPermission($permission);
+
+        // TODO: Some error checking would be nice...
 
         return response()->json('Permission granted');
     }
@@ -57,6 +67,5 @@ class PermissionsController extends Controller
             'creatItems' => $user->can('createItems')
         ]));
     }
-
     // TODO: is there a method for revoking permissions?
 }
