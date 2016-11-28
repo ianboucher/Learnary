@@ -4,8 +4,8 @@
 
     angular
         .module("learnary")
-        .controller("UserCtrl", ["$scope", "$http", "$uibModal",
-            function UserCtrl($scope, $http, $uibModal)
+        .controller("UsersCtrl", ["$scope", "$http", "$uibModal",
+            function UsersCtrl($scope, $http, $uibModal)
             {
                 var self = this;
 
@@ -39,7 +39,7 @@
                 );
 
 
-                $scope.launchModal = function(user)
+                self.launchModal = function(user)
                 {
                     var modalInstance = $uibModal.open(
                     {

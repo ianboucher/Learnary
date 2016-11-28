@@ -1,0 +1,43 @@
+<ng-include src="'js/nav/navbar_top.html'"></ng-include>
+
+<div class="container">
+
+    <div class="col-sm-10 col-sm-offset-1">
+        <h3>Users</h3>
+
+        <ul class="nav nav-tabs">
+            <li><a href="users">Users</a></li>
+            <li><a href="roles">Roles</a></li>
+            <li><a href="permissions">Permissions</a></li>
+            <li><a href="schools">Schools</a></li>
+            <li class="active"><a href="groups">Groups</a></li>
+        </ul>
+
+        <div class="table-repsonsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>School</th>
+                        <th>Users</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="group in groups.groupsData track by $index">
+                        <td>{{ group.name }}</td>
+                        <td>School here</td>
+                        <!-- TODO Expand to show users listed under this group -->
+                        <!-- <td>
+                            <button class="btn btn-xs btn-success"
+                                    ng-repeat="user in group.users track by $index">
+                                    {{ user.name }}
+                            </button>
+                        </td> -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

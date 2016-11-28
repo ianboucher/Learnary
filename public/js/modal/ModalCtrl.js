@@ -7,7 +7,14 @@
         .controller("ModalCtrl", ["$scope", "$http", "$uibModalInstance", "$log", "roles", "user",
             function ModalCtrl($scope, $http, $uibModalInstance, $log, roles, user)
             {
+                // user and roles are passed in via the 'resolve' property of
+                // uibModal.
+
                 $scope.currentRoleIds = [];
+
+                // iterate over the roles already assigned to the user that is
+                // being edited, get their ids and set their status to 'true' (to
+                // set-up the checkboxes)
 
                 user.roles.forEach(function(role)
                 {

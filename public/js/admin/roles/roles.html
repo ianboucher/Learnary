@@ -1,0 +1,43 @@
+<ng-include src="'js/nav/navbar_top.html'"></ng-include>
+
+<div class="container">
+
+    <div class="col-sm-10 col-sm-offset-1">
+        <h3>Users</h3>
+
+        <ul class="nav nav-tabs">
+            <li><a href="users">Users</a></li>
+            <li class="active"><a href="roles">Roles</a></li>
+            <li><a href="permissions">Permissions</a></li>
+            <li><a href="schools">Schools</a></li>
+            <li><a href="groups">Groups</a></li>
+        </ul>
+
+        <div class="table-repsonsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Permissions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="role in roles.roleData track by $index">
+                        <td>{{ role.display_name }}</td>
+                        <td>{{ role.description }}</td>
+                        <td>
+                            <button class="btn btn-xs btn-success"
+                                    ng-repeat="perm in role.perms track by $index"
+                                    ng-click="launchModal(perm)">
+                                    {{ perm.display_name }}
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

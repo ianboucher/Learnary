@@ -21,7 +21,7 @@ class PermissionsController extends Controller
 
     public function index()
     {
-        $permissions = Permission::all();
+        $permissions = Permission::with('roles')->get();
         return $permissions;
     }
 
@@ -33,7 +33,7 @@ class PermissionsController extends Controller
         $permission->description = $request->get('description');
         $permission->save();
 
-        return response()->json('Permission created');
+        return response()->json(compact('permission'));
     }
 
 

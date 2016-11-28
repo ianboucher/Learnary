@@ -52,7 +52,11 @@
     <script src="/js/auth/SignupCtrl.js"></script>
     <script src="/js/modal/ModalCtrl.js"></script>
     <script src="/js/orientation/OrientationCtrl.js"></script>
-    <script src="/js/user/UserCtrl.js"></script>
+    <script src="/js/admin/users/UsersCtrl.js"></script>
+    <script src="/js/admin/roles/RolesCtrl.js"></script>
+    <script src="/js/admin/permissions/PermissionsCtrl.js"></script>
+    <script src="/js/admin/schools/SchoolsCtrl.js"></script>
+    <script src="/js/admin/groups/GroupsCtrl.js"></script>
 
 </body>
 </html>
