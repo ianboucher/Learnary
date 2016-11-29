@@ -39,16 +39,15 @@ class PermissionsController extends Controller
 
     // TODO: are there verbs compatible with REST that could be user here?
 
-    public function attach(Request $request)
+    public function update(Request $request)
     {
         $role       = Role::where('name', '=', $request->get('role'))->first();
-        $permission = Permission::where('name', '=', $request->get('permission'))->first();
-
-        $role->attachPermission($permission);
+        $permission_ids = $request->get('permissions');
+        $role->perms()->sync($permission_ids);
 
         // TODO: Some error checking would be nice...
 
-        return response()->json('Permission granted');
+        return response()->json($role->perms);
     }
 
 

@@ -41,28 +41,57 @@
 
                 self.launchModal = function(user)
                 {
+                    console.log(user);
+                    self.selectedRoles = {};
+
+                    user.roles.forEach(function(role)
+                    {
+                        self.selectedRoles[role.id] = true;
+                    });
+
                     var modalInstance = $uibModal.open(
                     {
-                        templateUrl : "/js/modal/modal.html",
-                        controller  : "ModalCtrl",
-                        scope       : $scope,
-                        resolve:
-                        {
-                            roles: function()
+                        component: 'modalComponent',
+                        resolve: {
+                            items: function()
                             {
                                 return self.roles;
                             },
-                            user: function()
+                            selected: function()
                             {
-                                return user;
+                                return self.selectedRoles;
                             }
                         }
                     });
 
-                    modalInstance.result.then(function(roles)
-                    {
-                        user.roles = roles;
-                    })
+                    modalInstance.result.then (
+                        function(selectedRoles)
+                        {
+                            var updatedRoleIds = [];
+                            var postData = {};
+
+                            for (var id in selectedRoles)
+                            {
+                                if (selectedRoles[id])
+                                {
+                                    updatedRoleIds.push(id);
+                                }
+                            }
+
+                            postData = { roles: updatedRoleIds, email: user.email };
+
+                            return $http.post("/api/v1.0.0/roles", postData);
+                        }
+                    ).then (
+                        function(updatedRoles)
+                        {
+                            user.roles = updatedRoles.data;
+                        },
+                        function(error)
+                        {
+                            console.log("modal cancelled");
+                        }
+                    );
                 };
             }
         ]);

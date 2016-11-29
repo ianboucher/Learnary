@@ -1,6 +1,6 @@
 
 <div class="modal-header">
-    <h3>I'm a modal!</h3>
+    <h3>Select an option</h3>
 </div>
 
 <form ng-submit="submit()">
@@ -17,10 +17,10 @@
                 </thead>
 
                 <tbody>
-                    <tr ng-repeat="role in $resolve.roles track by $index">
-                        <td>{{role.display_name}}</td>
-                        <td>{{role.description}}</td>
-                        <td><input type="checkbox" class="checkbox pull-right" ng-model="currentRoleIds[role.id]"></td>
+                    <tr ng-repeat="item in $ctrl.items track by $index">
+                        <td>{{ item.display_name }}</td>
+                        <td>{{ item.description }}</td>
+                        <td><input type="checkbox" class="checkbox pull-right" ng-model="$ctrl.selected[item.id]"></td>
                     </tr>
                 </tbody>
             </table>
@@ -29,7 +29,8 @@
     </div>
 
     <div class="modal-footer">
-        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-        <input type="submit" class="btn primary-btn" value="Submit" />
+        <button class="btn btn-warning" ng-click="$ctrl.cancel()">Cancel</button>
+        <input type="submit" class="btn primary-btn" ng-click="$ctrl.submit()" />
+        <div>Currently selected: {{ $ctrl.selected }}
     </div>
 </form>

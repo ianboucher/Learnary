@@ -41,30 +41,59 @@
                 );
 
 
-                $scope.launchModal = function(perm)
+                self.launchModal = function(role)
                 {
+                    console.log(role);
+                    self.selectedPerms = {};
+
+                    role.perms.forEach(function(role)
+                    {
+                        self.selectedPerms[perm.id] = true;
+                    });
+
                     var modalInstance = $uibModal.open(
                     {
-                        templateUrl : "/js/modal/modal.html",
-                        controller  : "ModalCtrl",
-                        scope       : $scope,
-                        resolve:
-                        {
-                            roles: function()
+                        component: 'modalComponent',
+                        resolve: {
+                            items: function()
                             {
                                 return self.permissions;
                             },
-                            user: function()
+                            selected: function()
                             {
-                                return perm;
+                                return self.selectedRoles;
                             }
                         }
                     });
 
-                    modalInstance.result.then(function(perms)
-                    {
-                        role.permsissions = perms;
-                    })
+                    modalInstance.result.then (
+                        function(selectedPerms)
+                        {
+                            var updatedPermIds = [];
+                            var postData = {};
+
+                            for (var id in selectedPerms)
+                            {
+                                if (selectedPerms[id])
+                                {
+                                    updatedPermIds.push(id);
+                                }
+                            }
+
+                            postData = { permissions: updatedPermIds, role: role.name };
+
+                            return $http.post("/api/v1.0.0/permissions", postData);
+                        }
+                    ).then (
+                        function(updatedPerms)
+                        {
+                            role.perms = updatedPerms.data;
+                        },
+                        function(error)
+                        {
+                            console.log("modal cancelled");
+                        }
+                    );
                 };
             }
         ]);

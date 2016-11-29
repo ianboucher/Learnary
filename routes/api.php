@@ -33,12 +33,11 @@ Route::group(["prefix" => "v1.0.0"], function()
     Route::get('roles/all', 'RolesController@index');
     Route::put('roles', 'RolesController@create');
     Route::post('roles', 'RolesController@update');
-    // Route::post('roles/revoke', 'RolesController@revoke');
     Route::get('roles', 'RolesController@check');
 
     Route::get('permissions/all', 'PermissionsController@index');
     Route::put('permissions', 'PermissionsController@create');
-    Route::post('permissions', 'PermissionsController@attach');
+    Route::post('permissions', 'PermissionsController@update');
     Route::get('permissions', 'PermissionsController@check');
 
     Route::resource('schools', 'SchoolsController');

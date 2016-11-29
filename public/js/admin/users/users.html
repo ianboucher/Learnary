@@ -31,11 +31,12 @@
                         <td>{{ user.email }}</td>
                         <td></td>
                         <td></td>
-                        <td>
-                            <button class="btn btn-xs btn-success"
-                                    ng-repeat="role in user.roles track by $index"
-                                    ng-click="launchModal(user)">
-                                    {{ role.display_name }}
+                        <td ng-click="users.launchModal(user)">
+                            <button class="btn btn-xs btn-primary" ng-show="user.roles.length < 1">
+                                Assign Role
+                            </button>
+                            <button class="btn btn-xs btn-success" ng-repeat="role in user.roles track by $index">
+                                {{ role.display_name }}
                             </button>
                         </td>
                     </tr>
