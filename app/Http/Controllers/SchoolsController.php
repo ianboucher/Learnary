@@ -15,7 +15,7 @@ class SchoolsController extends Controller
      */
     public function index()
     {
-        return School::with('groups')->get();
+        return School::with('groups')->with('users')->get();
     }
 
     /**

@@ -4,64 +4,55 @@
 
     angular
         .module("learnary")
-        .controller("RolesCtrl", ["$scope", "$http", "$uibModal",
-            function RolesCtrl($scope, $http, $uibModal)
+        .controller("RolesCtrl", ["$rootScope", "$http", "$uibModal", "AdminService",
+            function RolesCtrl($rootScope, $http, $uibModal, AdminService)
             {
                 var self = this;
 
-                self.userData;
-                self.error;
+                self.roleData    = AdminService.roles;
+                self.permissions = AdminService.permissions;
 
-                $http.get("api/v1.0.0/roles/all").then (
-                    function(roles)
-                    {
-                        console.log(roles.data);
-                        self.roleData = roles.data;
-                    },
-                    function(error)
-                    {
-                        self.error = error.data.error;
-                        console.log(self.error); // TODO: handle error properly
-                        // window.alert("Unable to retrieve user data")
-                    }
-                );
+                $rootScope.$on("roles loaded", function(event)
+                {
+                    self.roleData = AdminService.roles;
+                });
 
-
-                $http.get("api/v1.0.0/permissions/all").then (
-                    function(permissions)
-                    {
-                        console.log(permissions.data);
-                        self.permissions = permissions.data;
-                    },
-                    function(error)
-                    {
-                        self.error = error.data.error;
-                        console.log(self.error); // TODO: handle error properly
-                    }
-                );
+                $rootScope.$on("permissions loaded", function(event)
+                {
+                    self.permissions = AdminService.permissions;
+                });
 
 
                 self.launchModal = function(role)
                 {
-                    console.log(role);
                     self.selectedPerms = {};
 
-                    role.perms.forEach(function(role)
+                    role.perms.forEach(function(perm)
                     {
                         self.selectedPerms[perm.id] = true;
                     });
 
                     var modalInstance = $uibModal.open(
                     {
-                        component: 'modalComponent',
-                        resolve: {
+                        controller   : "ModalCtrl",
+                        controllerAs : "$ctrl",
+                        templateUrl  : "/js/modal/checkbox_modal.html",
+                        resolve      : {
                             items: function()
                             {
                                 return self.permissions;
                             },
                             selected: function()
                             {
-                                return self.selectedRoles;
+                                return self.selectedPerms;
+                            },
+                            columns: function()
+                            {
+                                return ["Permission", "Description", "Edit"];
+                            },
+                            properties: function()
+                            {
+                                return ["display_name", "description"];
                             }
                         }
                     });

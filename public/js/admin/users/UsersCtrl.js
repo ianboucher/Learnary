@@ -4,39 +4,23 @@
 
     angular
         .module("learnary")
-        .controller("UsersCtrl", ["$scope", "$http", "$uibModal",
-            function UsersCtrl($scope, $http, $uibModal)
+        .controller("UsersCtrl", ["$rootScope", "$http", "$uibModal", "AdminService",
+            function UsersCtrl($rootScope, $http, $uibModal, AdminService)
             {
                 var self = this;
 
-                self.userData;
-                self.error;
+                self.userData = AdminService.users;
+                self.roles    = AdminService.roles;
 
-                $http.get("api/v1.0.0/users").then (
-                    function(users)
-                    {
-                        self.userData = users.data;
-                    },
-                    function(error)
-                    {
-                        self.error = error.data.error;
-                        console.log(self.error); // TODO: handle error properly
-                        // window.alert("Unable to retrieve user data")
-                    }
-                );
+                $rootScope.$on("users loaded", function(event)
+                {
+                    self.userData = AdminService.users;
+                });
 
-
-                $http.get("api/v1.0.0/roles/all").then (
-                    function(roles)
-                    {
-                        self.roles = roles.data;
-                    },
-                    function(error)
-                    {
-                        self.error = error.data.error;
-                        console.log(self.error); // TODO: handle error properly
-                    }
-                );
+                $rootScope.$on("roles loaded", function(event)
+                {
+                    self.roles = AdminService.roles;
+                });
 
 
                 self.launchModal = function(user)
@@ -51,8 +35,10 @@
 
                     var modalInstance = $uibModal.open(
                     {
-                        component: 'modalComponent',
-                        resolve: {
+                        controller   : "ModalCtrl",
+                        controllerAs : "$ctrl",
+                        templateUrl  : "/js/modal/checkbox_modal.html",
+                        resolve      : {
                             items: function()
                             {
                                 return self.roles;
@@ -60,6 +46,14 @@
                             selected: function()
                             {
                                 return self.selectedRoles;
+                            },
+                            columns: function()
+                            {
+                                return ["Role", "Description", "Action"];
+                            },
+                            properties: function()
+                            {
+                                return ["display_name", "description"];
                             }
                         }
                     });

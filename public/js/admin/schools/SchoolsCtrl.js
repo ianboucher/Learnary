@@ -4,66 +4,80 @@
 
     angular
         .module("learnary")
-        .controller("SchoolsCtrl", ["$scope", "$http", "$uibModal",
-            function SchoolsCtrl($scope, $http, $uibModal)
+        .controller("SchoolsCtrl", ["$rootScope", "$scope", "$http", "$uibModal", "AdminService",
+            function SchoolsCtrl($rootScope, $scope, $http, $uibModal, AdminService)
             {
                 var self = this;
 
-                self.userData;
-                self.error;
+                self.schoolsData = AdminService.schools;
+                self.groups      = AdminService.groups;
 
-                $http.get("api/v1.0.0/schools").then (
-                    function(schools)
+                $rootScope.$on("schools loaded", function(event)
+                {
+                    self.schoolsData = AdminService.schools;
+                });
+
+                $rootScope.$on("groups loaded", function(event)
+                {
+                    self.groups = AdminService.groups;
+                });
+
+                self.launchModal = function(school)
+                {
+                    var modalInstance = $uibModal.open(
                     {
-                        self.schoolsData = schools.data;
-                    },
-                    function(error)
-                    {
-                        self.error = error.data.error;
-                        console.log(self.error); // TODO: handle error properly
-                        // window.alert("Unable to retrieve user data")
-                    }
-                );
+                        controller   : "ModalCtrl",
+                        controllerAs : "$ctrl",
+                        templateUrl  : "/js/modal/button_modal.html",
+                        resolve      : {
+                            items: function()
+                            {
+                                return school.groups;
+                            },
+                            selected: function()
+                            {
+                                return null;
+                            },
+                            columns: function()
+                            {
+                                return ["Name", "Action"];
+                            },
+                            properties: function()
+                            {
+                                return ["name"];
+                            }
+                        }
+                    });
 
+                    modalInstance.result.then (
+                        function(selectedRoles)
+                        {
+                            var updatedRoleIds = [];
+                            var postData = {};
 
-                $http.get("api/v1.0.0/groups").then (
-                    function(groups)
-                    {
-                        self.groups = groups.data;
-                    },
-                    function(error)
-                    {
-                        self.error = error.data.error;
-                        console.log(self.error); // TODO: handle error properly
-                    }
-                );
+                            for (var id in selectedRoles)
+                            {
+                                if (selectedRoles[id])
+                                {
+                                    updatedRoleIds.push(id);
+                                }
+                            }
 
+                            postData = { roles: updatedRoleIds, email: user.email };
 
-                // $scope.launchModal = function(user)
-                // {
-                //     var modalInstance = $uibModal.open(
-                //     {
-                //         templateUrl : "/js/modal/modal.html",
-                //         controller  : "ModalCtrl",
-                //         scope       : $scope,
-                //         resolve:
-                //         {
-                //             roles: function()
-                //             {
-                //                 return self.roles;
-                //             },
-                //             user: function()
-                //             {
-                //                 return user;
-                //             }
-                //         }
-                //     });
-                //
-                //     modalInstance.result.then(function(roles)
-                //     {
-                //         user.roles = roles;
-                //     })
-                // };
+                            return $http.post("/api/v1.0.0/roles", postData);
+                        }
+                    ).then (
+                        function(updatedRoles)
+                        {
+                            user.roles = updatedRoles.data;
+                        },
+                        function(error)
+                        {
+                            console.log("modal cancelled");
+                        }
+                    );
+                };
             }
         ]);
 })();

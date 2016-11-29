@@ -3,8 +3,7 @@
 <div class="container">
 
     <div class="col-sm-10 col-sm-offset-1">
-        <h3>Users</h3>
-
+        <hr/>
         <ul class="nav nav-tabs">
             <li><a href="users">Users</a></li>
             <li class="active"><a href="roles">Roles</a></li>
@@ -27,13 +26,15 @@
                     <tr ng-repeat="role in roles.roleData track by $index">
                         <td>{{ role.display_name }}</td>
                         <td>{{ role.description }}</td>
-                        <td ng-click="roles.launchModal(role)">
-                            <button class="btn btn-xs btn-primary"
-                                    ng-show="role.perms.length < 1">
+                        <td>
+                            <button ng-if="role.perms.length < 1"
+                                    ng-click="roles.launchModal(role)"
+                                    class="btn btn-xs btn-primary">
                                     Assign Permission
                             </button>
-                            <button class="btn btn-xs btn-success"
-                                    ng-repeat="perm in role.perms track by $index">
+                            <button ng-repeat="perm in role.perms track by $index"
+                                    ng-click="roles.launchModal(role)"
+                                    class="btn btn-xs btn-success" >
                                     {{ perm.display_name }}
                             </button>
                         </td>

@@ -10,16 +10,13 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Role</th>
-                        <th>Description</th>
-                        <th>Assigned</th>
+                        <th ng-repeat="column in $ctrl.columns track by $index">{{ column }}</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <tr ng-repeat="item in $ctrl.items track by $index">
-                        <td>{{ item.display_name }}</td>
-                        <td>{{ item.description }}</td>
+                        <td ng-repeat="property in $ctrl.properties">{{ item[property] }}</td>
                         <td><input type="checkbox" class="checkbox pull-right" ng-model="$ctrl.selected[item.id]"></td>
                     </tr>
                 </tbody>

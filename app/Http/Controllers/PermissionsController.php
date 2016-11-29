@@ -41,13 +41,23 @@ class PermissionsController extends Controller
 
     public function update(Request $request)
     {
-        $role       = Role::where('name', '=', $request->get('role'))->first();
+        $role           = Role::where('name', '=', $request->get('role'))->first();
         $permission_ids = $request->get('permissions');
         $role->perms()->sync($permission_ids);
 
         // TODO: Some error checking would be nice...
 
         return response()->json($role->perms);
+    }
+
+
+    public function attach(Request $request)
+    {
+        $permission = Permission::where('name', '=', $request->get('permission'))->first();
+        $role_ids   = $request->get('roles');
+        $permission->roles()->sync($role_ids);
+
+        return response()->json($permission->roles);
     }
 
 

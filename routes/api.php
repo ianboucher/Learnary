@@ -38,6 +38,7 @@ Route::group(["prefix" => "v1.0.0"], function()
     Route::get('permissions/all', 'PermissionsController@index');
     Route::put('permissions', 'PermissionsController@create');
     Route::post('permissions', 'PermissionsController@update');
+    Route::post('permissions/roles', 'PermissionsController@attach');
     Route::get('permissions', 'PermissionsController@check');
 
     Route::resource('schools', 'SchoolsController');

@@ -46,11 +46,12 @@
     <!-- APPLICATION SCRIPTS -->
     <script src="/js/app.js"></script>
     <script src="/js/services/SessionService.js"></script>
+    <script src="/js/admin/services/AdminService.js"></script>
     <script src="/js/landing/LandingCtrl.js"></script>
     <script src="/js/nav/NavCtrl.js"></script>
     <script src="/js/auth/LoginCtrl.js"></script>
     <script src="/js/auth/SignupCtrl.js"></script>
-    <script src="/js/modal/modalComponent.js"></script>
+    <script src="/js/modal/ModalCtrl.js"></script>
     <script src="/js/orientation/OrientationCtrl.js"></script>
     <script src="/js/admin/users/UsersCtrl.js"></script>
     <script src="/js/admin/roles/RolesCtrl.js"></script>
