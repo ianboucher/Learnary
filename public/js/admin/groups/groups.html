@@ -22,7 +22,7 @@
                     </tr>
                 </thead>
 
-                <tbody ng-repeat="group in groups.groupsData track by $index">
+                <tbody ng-repeat="group in groups.data track by $index">
                     <td>{{ group.name }}</td>
                     <td><button ng-click="groups.launchModal(group)" class="btn btn-xs btn-primary">View</button>
                     <td><button ng-click="groups.launchModal(group)" class="btn btn-xs btn-primary">View</button>

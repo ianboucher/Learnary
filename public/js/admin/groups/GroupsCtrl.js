@@ -4,23 +4,17 @@
 
     angular
         .module("learnary")
-        .controller("GroupsCtrl", ["$rootScope", "$http", "$uibModal", "AdminService",
-            function GroupsCtrl($rootScope, $http, $uibModal, AdminService)
+        .controller("GroupsCtrl", ["$scope", "$http", "$uibModal", "AdminService",
+            function GroupsCtrl($scope, $http, $uibModal, AdminService)
             {
                 var self = this;
 
-                self.groupsData = AdminService.groups;
-                self.schools    = AdminService.schools;
-
-                $rootScope.$on("groups loaded", function(event)
-                {
-                    self.groupsData = AdminService.groups;
-                });
-
-                $rootScope.$on("schools loaded", function(event)
-                {
-                    self.schools = AdminService.schools;
-                });
+                $scope.$watch(function() { return AdminService.data },
+                    function()
+                    {
+                        self.data        = AdminService.getGroups();
+                    }, true
+                );
 
 
                 self.launchModal = function(group)
@@ -49,6 +43,8 @@
                             }
                         }
                     });
+
+                    // TODO: figure out what to do with the modal, if anything
 
                     modalInstance.result.then (
                         function(selectedRoles)

@@ -22,7 +22,7 @@
                     </tr>
                 </thead>
 
-                <tbody ng-repeat="school in schools.schoolsData track by $index">
+                <tbody ng-repeat="school in schools.data track by $index">
                     <td>{{ school.name }}</td>
                     <td><button ng-click="schools.launchModal(school)" class="btn btn-xs btn-primary">View</button>
                     <td><button ng-click="schools.launchModal(school)" class="btn btn-xs btn-primary">View</button>

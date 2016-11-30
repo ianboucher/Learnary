@@ -4,28 +4,34 @@
 
     angular
         .module("learnary")
-        .controller("UsersCtrl", ["$rootScope", "$http", "$uibModal", "AdminService",
-            function UsersCtrl($rootScope, $http, $uibModal, AdminService)
+        .controller("UsersCtrl", ["$scope", "$http", "$uibModal", "AdminService",
+            function UsersCtrl($scope, $http, $uibModal, AdminService)
             {
                 var self = this;
 
-                self.userData = AdminService.users;
-                self.roles    = AdminService.roles;
+                $scope.$watch(function() { return AdminService.data },
+                    function(newValue)
+                    {
+                        // Added data to a .data object literal in service as
+                        // allows me to $watch for changes - can't watch service
+                        // directly.
 
-                $rootScope.$on("users loaded", function(event)
-                {
-                    self.userData = AdminService.users;
-                });
+                        // called 4x on initialisation of controller, but only
+                        // 1x per change thereon.
 
-                $rootScope.$on("roles loaded", function(event)
-                {
-                    self.roles = AdminService.roles;
-                });
+                        // QUESTION: Using functions rather than referencing
+                        // properties directly to prevent future changes to the
+                        // service propogating up to controller. This increases
+                        // the call-stack - what's the best option?
+
+                        self.data  = AdminService.getUsers();
+                        self.roles = AdminService.getRoles();
+                    }, true
+                );
 
 
                 self.launchModal = function(user)
                 {
-                    console.log(user);
                     self.selectedRoles = {};
 
                     user.roles.forEach(function(role)

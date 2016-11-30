@@ -4,23 +4,18 @@
 
     angular
         .module("learnary")
-        .controller("RolesCtrl", ["$rootScope", "$http", "$uibModal", "AdminService",
-            function RolesCtrl($rootScope, $http, $uibModal, AdminService)
+        .controller("RolesCtrl", ["$scope", "$http", "$uibModal", "AdminService",
+            function RolesCtrl($scope, $http, $uibModal, AdminService)
             {
                 var self = this;
 
-                self.roleData    = AdminService.roles;
-                self.permissions = AdminService.permissions;
-
-                $rootScope.$on("roles loaded", function(event)
-                {
-                    self.roleData = AdminService.roles;
-                });
-
-                $rootScope.$on("permissions loaded", function(event)
-                {
-                    self.permissions = AdminService.permissions;
-                });
+                $scope.$watch(function() { return AdminService.data },
+                    function()
+                    {
+                        self.data        = AdminService.getRoles();
+                        self.permissions = AdminService.getPermissions();
+                    }, true
+                );
 
 
                 self.launchModal = function(role)

@@ -4,23 +4,18 @@
 
     angular
         .module("learnary")
-        .controller("PermissionsCtrl", ["$rootScope", "$http", "$uibModal", "AdminService",
-            function PermissionsCtrl($rootScope, $http, $uibModal, AdminService)
+        .controller("PermissionsCtrl", ["$scope", "$http", "$uibModal", "AdminService",
+            function PermissionsCtrl($scope, $http, $uibModal, AdminService)
             {
                 var self = this;
 
-                self.permissionsData = AdminService.permissions;
-                self.roles           = AdminService.roles;
-
-                $rootScope.$on("permissions loaded", function(event)
-                {
-                    self.permissionsData = AdminService.permissions;
-                });
-
-                $rootScope.$on("roles loaded", function(event)
-                {
-                    self.roles = AdminService.roles;
-                });
+                $scope.$watch(function() { return AdminService.data },
+                    function()
+                    {
+                        self.data        = AdminService.getPermissions();
+                        self.roles = AdminService.getRoles();
+                    }, true
+                );
 
 
                 self.launchModal = function(perm)
@@ -56,6 +51,8 @@
                             }
                         }
                     });
+
+                    // TODO: figure out what to do with the modal, if anything
 
                     modalInstance.result.then (
                         function(selectedRoles)

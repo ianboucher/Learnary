@@ -4,23 +4,18 @@
 
     angular
         .module("learnary")
-        .controller("SchoolsCtrl", ["$rootScope", "$scope", "$http", "$uibModal", "AdminService",
-            function SchoolsCtrl($rootScope, $scope, $http, $uibModal, AdminService)
+        .controller("SchoolsCtrl", ["$scope", "$http", "$uibModal", "AdminService",
+            function SchoolsCtrl($scope, $http, $uibModal, AdminService)
             {
                 var self = this;
 
-                self.schoolsData = AdminService.schools;
-                self.groups      = AdminService.groups;
-
-                $rootScope.$on("schools loaded", function(event)
-                {
-                    self.schoolsData = AdminService.schools;
-                });
-
-                $rootScope.$on("groups loaded", function(event)
-                {
-                    self.groups = AdminService.groups;
-                });
+                $scope.$watch(function() { return AdminService.data },
+                    function()
+                    {
+                        self.data        = AdminService.getSchools();
+                        // self.permissions = AdminService.getPermissions();
+                    }, true
+                );
 
                 self.launchModal = function(school)
                 {
