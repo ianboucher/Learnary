@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Group;
 use JWTAuth;
+use Auth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 
@@ -24,7 +25,7 @@ class UsersController extends Controller
 
     public function index()
     {
-        $users = User::with('roles')->get();
+        $users = User::with('roles', 'roles.perms', 'group', 'group.school')->get();
         return $users;
     }
 
@@ -96,8 +97,13 @@ class UsersController extends Controller
             return response()->json(['token_absent'], $error->getStatusCode());
         }
 
-        // the token is valid and user has been found via the sub claim
+        // TODO: Can't seem to get nested resources with the user directly from
+        // the token. this requires 2x calls to the database.
+         
+        $user = Auth::User()->with('roles', 'roles.perms', 'group', 'group.school')->find($user->id);
+
         return response()->json(compact('user'));
 
     }
 }
+//

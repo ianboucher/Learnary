@@ -50,30 +50,10 @@
                         }
                     ).then ( // Retrieve the authenticated current user
 
-                        function(users)
+                        function(user)
                         {
-                            self.currentUser     = users.data.user;
+                            self.currentUser     = user.data.user;
                             self.isAuthenticated = $auth.isAuthenticated();
-
-                            return $http.get("api/v1.0.0/roles");
-                        }
-                    ).then ( // Retrieve the current user's roles
-
-                        function(roles)
-                        {
-                            // TODO: Consider checking roles by email rather than
-                            // by getting the user from the token. This would
-                            // allow an admin to retrieve roles belonging to other
-                            // users.
-                            self.currentUser.roles = roles.data;
-
-                            return $http.get("api/v1.0.0/permissions");
-                        }
-                    ).then ( // Retrieve the current user's permissions
-
-                        function(permissions)
-                        {
-                            self.currentUser.permissions = permissions.data;
                             $rootScope.$broadcast("login");
                             $window.localStorage.setItem("currentUser", angular.toJson(self.currentUser));
 
@@ -82,7 +62,7 @@
                                 $state.go(nextState);
                             }
                         }
-                    );
+                    )
                 };
 
 

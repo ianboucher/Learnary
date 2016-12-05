@@ -14,7 +14,7 @@ class GroupsController extends Controller
      */
     public function index()
     {
-        return Group::with('users')->get();
+        return Group::with('users', 'school')->get();
     }
 
     /**
