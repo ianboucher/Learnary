@@ -86,16 +86,19 @@
                 };
 
 
-                self.checkRole = function(role)
+                self.checkRole = function(roleName)
                 {
-                    return self.currentUser.roles.hasOwnProperty(role);
-                }
+                    return self.currentUser.roles.some(function(role)
+                    {
+                        return role.name === roleName;
+                    })
+                };
 
 
                 self.checkPermission = function(permission)
                 {
                     return self.currentUser.permissions.hasOwnProperty(permission);
-                }
+                };
 
                 return self;
             }

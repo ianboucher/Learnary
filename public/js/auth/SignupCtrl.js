@@ -4,12 +4,18 @@
 
     angular
         .module("learnary")
-        .controller("SignupCtrl", ["$scope", "$auth", "$http", "SessionService",
-            function SignupCtrl($scope, $auth, $http, SessionService)
+        .controller("SignupCtrl", ["$scope", "$auth", "$http", "$state", "SessionService",
+            function SignupCtrl($scope, $auth, $http, $state, SessionService)
             {
-                var self = this;
+                var self        = this,
+                    rolesEnum   = {
+                        "student" : "3",
+                        "staff"   : "2"
+                    };
+
                 $scope.credentials = {};
-                $scope.credentials.role = "student";
+                $scope.role        = "student";
+
 
                 // QUESTION: I need to provide the option of specifying a school
                 // or class/group for the user to join on signing-up. How should
@@ -33,7 +39,10 @@
 
                         function(response)
                         {
-                            $auth.setToken(response.data.token);
+                            if (!SessionService.currentUser)
+                            {
+                                $auth.setToken(response.data.token);
+                            }
 
                             // QUESTION: The request below assigns a role to the
                             // new user. At the moment, the value of 'role'
@@ -41,10 +50,15 @@
                             // how could I stop students signing up as staff and
                             // getting the associated permissions?
 
-                            // TODO: Revise this request - API expects an array of
-                            // role_ids as this makes subsequent modifcation easier
+                            // QUESTION: API expects an array of role_ids as this
+                            // makes subsequent modifcation easier. Would it be
+                            // preferable to pass role names and have the API find
+                            // the relevant IDs before updating the roles?
 
-                            return $http.post("/api/v1.0.0/roles", { roles: $scope.credentials.role } );
+                            var email = $scope.credentials.email,
+                                role  = [rolesEnum[$scope.role]];
+
+                            return $http.post("/api/v1.0.0/roles", { "roles": role, "email": email } );
                         },
                         function(error)
                         {
@@ -55,7 +69,14 @@
 
                         function(response)
                         {
-                            SessionService.login($scope.credentials, "orientation");
+                            if (SessionService.currentUser && SessionService.checkRole("admin"))
+                            {
+                                $state.go($state.previous);
+                            }
+                            else
+                            {
+                                SessionService.login($scope.credentials, "orientation");
+                            }
                         }
                     );
                 };

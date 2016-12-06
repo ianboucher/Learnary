@@ -4,6 +4,13 @@
 
     angular
         .module("learnary", ["ui.router", "ui.bootstrap", "satellizer"])
+        .run(function ($rootScope, $state)
+        {
+            $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState)
+            {
+                $state.previous = fromState;
+            });
+        })
         .config(function ($stateProvider, $locationProvider, $authProvider, $urlRouterProvider)
         {
             $locationProvider
