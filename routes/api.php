@@ -27,6 +27,8 @@ Route::group(["prefix" => "v1.0.0"], function()
     Route::post('signup', 'UsersController@create');
     Route::get('users/show', 'UsersController@show');
     Route::get('users', 'UsersController@index');
+    Route::post('users/{user}', 'UsersController@update');
+    Route::delete('users/{user}', 'UsersController@destroy');
 
     Route::post('login', 'AuthenticateController@login');
 
@@ -43,6 +45,8 @@ Route::group(["prefix" => "v1.0.0"], function()
 
     Route::resource('schools', 'SchoolsController');
     Route::resource('groups', 'GroupsController');
+    Route::resource('users.groups', 'UserGroupsController');
+
 });
 
 

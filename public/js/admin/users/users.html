@@ -34,19 +34,26 @@
                         <td>{{ user.name }}</td>
                         <td>{{ user.email }}</td>
                         <td>{{ user.group.school.name }}</td>
-                        <td>{{ user.group.name }}</td>
+                        <td>
+                            <button ng-click="users.radioModal(user, users.groups, 'group', ['name', ''])"
+                                    class="btn btn-xs btn-success">
+                                    {{ user.group.name }}
+                            </button>
+                        </td>
                         <td>
                             <button ng-if="user.roles.length < 1"
-                                    ng-click="users.launchModal(user)"
+                                    ng-click="users.checkboxModal(user, users.roles, 'roles', ['display_name', 'description'])"
                                     class="btn btn-xs btn-primary">
                                     Assign Role
                             </button>
                             <button ng-repeat="role in user.roles track by $index"
-                                    ng-click="users.launchModal(user)"
+                                    ng-click="users.editRoles(user, users.roles, 'roles', ['display_name', 'description'])"
                                     class="btn btn-xs btn-success" >
                                     {{ role.display_name }}
                             </button>
                         </td>
+                        <td><button class="btn btn-xs btn-primary" ng-click="users.editUser(user)">Edit</button></td>
+                        <td><button class="btn btn-xs btn-danger" ng-click="users.deleteUser(user, $index)">Delete</button></td>
                     </tr>
                 </tbody>
             </table>

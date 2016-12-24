@@ -4,94 +4,109 @@
 
     angular
         .module("learnary")
-        .controller("UsersCtrl", ["$scope", "$http", "$uibModal", "AdminService",
-            function UsersCtrl($scope, $http, $uibModal, AdminService)
+        .controller("UsersCtrl", [
+            "$scope",
+            "$http",
+            "$uibModal",
+            "ModalService",
+            "UserService",
+            "RoleService",
+            "GroupService",
+            function UsersCtrl($scope, $http, $uibModal, ModalService, UserService, RoleService, GroupService)
             {
                 var self = this;
 
-                $scope.$watch(function() { return AdminService.data },
-                    function(newValue)
-                    {
-                        // Added data to a .data object-literal in service as it
-                        // allows me to $watch for changes - can't watch service
-                        // directly.
-
-                        // called 4x on initialisation of controller, but only
-                        // 1x per change thereafter.
-
-                        // QUESTION: Using functions rather than referencing
-                        // properties directly to prevent future changes to the
-                        // service breaking the controller. However, this increases
-                        // the call-stack - what's the best option?
-
-                        self.data  = AdminService.getUsers();
-                        self.roles = AdminService.getRoles();
-                    }, true
-                );
-
-
-                self.launchModal = function(user)
+                UserService.loadUsers().then(function(users)
                 {
-                    self.selectedRoles = {};
+                    self.data = users;
+                    return RoleService.loadRoles();
+                })
+                .then(function(roles)
+                {
+                    self.roles = roles;
+                    return GroupService.loadGroups();
+                })
+                .then(function(groups)
+                {
+                    self.groups = groups;
+                })
+                .catch(function(error)
+                {
+                    console.log(error);
+                });
 
-                    user.roles.forEach(function(role)
-                    {
-                        self.selectedRoles[role.id] = true;
-                    });
 
-                    var modalInstance = $uibModal.open(
-                    {
-                        controller   : "ModalCtrl",
-                        controllerAs : "$ctrl",
-                        templateUrl  : "/js/modal/checkbox_modal.html",
-                        resolve      : {
-                            items: function()
-                            {
-                                return self.roles;
-                            },
-                            selected: function()
-                            {
-                                return self.selectedRoles;
-                            },
-                            columns: function()
-                            {
-                                return ["Role", "Description", "Action"];
-                            },
-                            properties: function()
-                            {
-                                return ["display_name", "description"];
-                            }
-                        }
-                    });
+                self.deleteUser = function(user, index)
+                {
+                    UserService.deleteUser(user);
+                    self.data.splice(index);
+                }
 
-                    modalInstance.result.then (
-                        function(selectedRoles)
+
+                self.editUser = function(user)
+                {
+                    ModalService.createModal("/js/modal/user_form_modal.html", "FormModalCtrl", user)
+                        .then(function(updatedUser)
                         {
-                            var updatedRoleIds = [];
-                            var postData = {};
-
-                            for (var id in selectedRoles)
-                            {
-                                if (selectedRoles[id])
-                                {
-                                    updatedRoleIds.push(id);
-                                }
-                            }
-
-                            postData = { roles: updatedRoleIds, email: user.email };
-
-                            return $http.post("/api/v1.0.0/roles", postData);
-                        }
-                    ).then (
-                        function(updatedRoles)
-                        {
-                            user.roles = updatedRoles.data;
-                        },
-                        function(error)
+                            $http.post("/api/v1.0.0/users/" + user.id, { "user" : updatedUser });
+                        })
+                        .catch(function(error)
                         {
                             console.log("modal cancelled");
-                        }
-                    );
+                        });
+                };
+
+
+                self.editRoles = function(user, items, itemName, itemProperties)
+                {
+                    var additionalData = {
+                        "user"           : user,
+                        "items"          : items,
+                        "itemName"       : itemName,
+                        "itemProperties" : itemProperties
+                    }
+
+                    ModalService.createModal("/js/modal/checkbox_modal.html", "CheckboxModalCtrl", additionalData)
+                        .then(function(selectedItemIds)
+                        {
+                            return $http.post("/api/v1.0.0/" + itemName, {
+                                [itemName] : selectedItemIds,
+                                "email"    : user.email
+                            });
+                        })
+                        .then(function(updatedItems)
+                        {
+                            user[itemName] = updatedItems.data;
+                        })
+                        .catch(function(error)
+                        {
+                            console.log("modal cancelled");
+                        });
+                };
+
+
+                self.radioModal = function(user, items, itemName, itemProperties)
+                {
+                    var additionalData = {
+                        "user"           : user,
+                        "items"          : items,
+                        "itemName"       : itemName,
+                        "itemProperties" : itemProperties
+                    }
+
+                    ModalService.createModal("/js/modal/radio_modal.html", "RadioModalCtrl", additionalData)
+                        .then(function(selectedItem)
+                        {
+                            return $http.put("/api/v1.0.0/users/" + user.id + "/groups/" + selectedItem.id);
+                        })
+                        .then(function(updatedItems)
+                        {
+                            user[itemName] = updatedItems.data;
+                        })
+                        .catch(function(error)
+                        {
+                            console.log("modal cancelled");
+                        });
                 };
             }
         ]);

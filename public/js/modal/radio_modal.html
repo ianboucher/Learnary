@@ -1,23 +1,24 @@
-
 <div class="modal-header">
     <h3>Select an option</h3>
 </div>
 
-<form ng-submit="submit()">
+<form>
     <div class="modal-body">
 
         <div class="table-repsonsive">
             <table class="table">
                 <thead>
                     <tr>
-                        <th ng-repeat="column in $ctrl.columns track by $index">{{ column }}</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th class="text-right">Selected?</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <tr ng-repeat="item in $ctrl.items track by $index">
                         <td ng-repeat="property in $ctrl.properties">{{ item[property] }}</td>
-                        <td><button class="btn btn-xs btn-primary">Edit</td>
+                        <td><input type="radio" class="pull-right" ng-model="$ctrl.selectedItem" ng-value="$index"/></td>
                     </tr>
                 </tbody>
             </table>
@@ -27,7 +28,6 @@
 
     <div class="modal-footer">
         <button class="btn btn-warning" ng-click="$ctrl.cancel()">Cancel</button>
-        <input type="submit" class="btn primary-btn" ng-click="$ctrl.submit()" />
-        <div>Currently selected: {{ $ctrl.selected }}
+        <input type="submit" class="btn" ng-click="$ctrl.submit()"/>
     </div>
 </form>

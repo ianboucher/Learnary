@@ -99,11 +99,32 @@ class UsersController extends Controller
 
         // TODO: Can't seem to get nested resources with the user directly from
         // the token. this requires 2x calls to the database.
-         
+
         $user = Auth::User()->with('roles', 'roles.perms', 'group', 'group.school')->find($user->id);
 
         return response()->json(compact('user'));
+    }
 
+
+    public function update(Request $request, $id)
+    {
+        $user = User::find($id);
+
+        $user->name     = $request->input('user.name');
+        $user->email    = $request->input('user.email');
+        $user->password = bcrypt($request->input('user.password'));
+
+        $user->save();
+
+        return 'User '. $user->name . ' successfully updated';
+    }
+
+
+    public function destroy(Request $request, $id)
+    {
+        $user = User::find($id);
+        $user->delete();
+
+        return 'User '. $user->name . ' successfully deleted';
     }
 }
-//
