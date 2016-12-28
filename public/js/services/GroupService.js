@@ -12,7 +12,7 @@
 
                 self.loadGroups = function()
                 {
-                    return $http.get("api/v1.0.0/groups/")
+                    return $http.get("api/v1.0.0/groups")
                         .then(function(groups)
                         {
                             return data.groups = groups.data;
@@ -32,11 +32,15 @@
                 };
 
 
+                self.addGroup = function(group)
+                {
+                    return $http.post("/api/v1.0.0/groups", { "group" : role });
+                };
+
+
                 self.editGroup = function(group)
                 {
-                    return $http.post("/api/v1.0.0/groups/" + group.id, {
-                        "group" : group
-                    });
+                    return $http.post("/api/v1.0.0/groups/" + group.id, { "group" : group });
                 };
 
 

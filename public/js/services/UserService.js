@@ -12,7 +12,7 @@
 
                 self.loadUsers = function()
                 {
-                    return $http.get("api/v1.0.0/users/")
+                    return $http.get("api/v1.0.0/users")
                         .then(function(users)
                         {
                             return data.users = users.data;

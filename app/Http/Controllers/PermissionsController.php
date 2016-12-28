@@ -25,12 +25,12 @@ class PermissionsController extends Controller
         return $permissions;
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
         $permission = new Permission();
-        $permission->name        = $request->get('name');
-        $permission->displayName = $request->get('display-name');
-        $permission->description = $request->get('description');
+        $permission->name        = $request->input('name');
+        $permission->displayName = $request->input('display-name');
+        $permission->description = $request->input('description');
         $permission->save();
 
         return response()->json(compact('permission'));
@@ -41,23 +41,13 @@ class PermissionsController extends Controller
 
     public function update(Request $request)
     {
-        $role           = Role::where('name', '=', $request->get('role'))->first();
-        $permission_ids = $request->get('permissions');
-        $role->perms()->sync($permission_ids);
+        $permission = new Permission();
+        $permission->name        = $request->input('name');
+        $permission->displayName = $request->input('display-name');
+        $permission->description = $request->input('description');
+        $permission->save();
 
-        // TODO: Some error checking would be nice...
-
-        return response()->json($role->perms);
-    }
-
-
-    public function attach(Request $request)
-    {
-        $permission = Permission::where('name', '=', $request->get('permission'))->first();
-        $role_ids   = $request->get('roles');
-        $permission->roles()->sync($role_ids);
-
-        return response()->json($permission->roles);
+        return response()->json(compact('permission'));
     }
 
 

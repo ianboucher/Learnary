@@ -36,6 +36,20 @@
                 });
 
 
+                self.editUser = function(user)
+                {
+                    ModalService.createModal("/js/modal/form_modal_users.html", "FormModalCtrl", user)
+                        .then(function(updatedUser)
+                        {
+                            UserService.editUser(updatedUser);
+                        })
+                        .catch(function(error)
+                        {
+                            console.log("modal cancelled");
+                        });
+                };
+
+
                 self.deleteUser = function(user, index)
                 {
                     UserService.deleteUser(user);
@@ -43,40 +57,24 @@
                 }
 
 
-                self.editUser = function(user)
-                {
-                    ModalService.createModal("/js/modal/user_form_modal.html", "FormModalCtrl", user)
-                        .then(function(updatedUser)
-                        {
-                            $http.post("/api/v1.0.0/users/" + user.id, { "user" : updatedUser });
-                        })
-                        .catch(function(error)
-                        {
-                            console.log("modal cancelled");
-                        });
-                };
-
-
-                self.editRoles = function(user, items, itemProperties)
+                self.manageRoles = function(user)
                 {
                     var additionalData = {
-                        "parent"         : user,
-                        "selected"       : user.roles,
-                        "items"          : items,
-                        "itemProperties" : itemProperties
+                        "currentItems"   : user.roles,
+                        "allItems"       : self.roles,
+                        "itemProperties" : ['display_name', 'description']
                     }
 
                     ModalService.createModal("/js/modal/checkbox_modal.html", "CheckboxModalCtrl", additionalData)
-                        .then(function(selectedItemIds)
+                        .then(function(selectedRoleIds)
                         {
-                            return $http.post("/api/v1.0.0/roles", {
-                                "roles" : selectedItemIds,
-                                "email" : user.email
+                            return $http.put("/api/v1.0.0/user-roles/" + user.id, {
+                                "roles" : selectedRoleIds,
                             });
                         })
-                        .then(function(updatedItems)
+                        .then(function(updatedRoles)
                         {
-                            user.roles = updatedItems.data;
+                            user.roles = updatedRoles.data;
                         })
                         .catch(function(error)
                         {
@@ -85,23 +83,22 @@
                 };
 
 
-                self.radioModal = function(user, items, itemName, itemProperties)
+                self.manageGroup = function(user)
                 {
                     var additionalData = {
-                        "parent"         : user,
-                        "selected"       : user.group,
-                        "items"          : items,
-                        "itemProperties" : itemProperties
+                        "currentItem"    : user.group,
+                        "allItems"       : self.groups,
+                        "itemProperties" : ['name', '']
                     }
 
                     ModalService.createModal("/js/modal/radio_modal.html", "RadioModalCtrl", additionalData)
-                        .then(function(selectedItem)
+                        .then(function(selectedGroup)
                         {
-                            return $http.put("/api/v1.0.0/users/" + user.id + "/groups/" + selectedItem.id);
+                            return $http.put("/api/v1.0.0/users/" + user.id + "/groups/" + selectedGroup.id);
                         })
-                        .then(function(updatedItems)
+                        .then(function(selectedGroup)
                         {
-                            user[itemName] = updatedItems.data;
+                            user.group = selectedGroup.data;
                         })
                         .catch(function(error)
                         {

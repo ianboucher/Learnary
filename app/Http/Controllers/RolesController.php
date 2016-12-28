@@ -25,27 +25,36 @@ class RolesController extends Controller
     }
 
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
         $role = new Role();
-        $role->name         = $request->get('name');
-        $role->display_name = $request->get('display-name');
-        $role->description  = $request->get('description');
+        $role->name         = $request->input('role.name');
+        $role->display_name = $request->input('role.display_name');
+        $role->description  = $request->input('role.description');
         $role->save();
 
         return response()->json('Role created');
     }
 
-    // TODO: are there verbs compatible with REST that could be used here?
 
-    public function update(Request $request)
+    /**
+     * Update the specified Role in storage.
+     *
+     * @param  Request  $request
+     * @param  int  $id
+     * @return Response
+     */
+    public function update(Request $request, $id)
     {
-        $user = User::where('email', '=', $request->get('email'))->first();
-        // $user = JWTAuth::parseToken()->authenticate();
-        $role_ids = $request->get('roles');
-        $user->roles()->sync($role_ids);
+        $role = Role::findOrFail($id);
+        $role->name         = $request->input('role.name');
+        $role->display_name = $request->input('role.display_name');
+        $role->description  = $request->input('role.description');
+        $role->save();
 
-        return response()->json($user->roles);
+        return $role;
+
+        // return 'Role '. $role->name . ' successfully updated';
     }
 
 
@@ -63,5 +72,20 @@ class RolesController extends Controller
             'staff'     => $user->hasRole('staff'),
             'student'   => $user->hasRole('student')
         ]));
+    }
+
+
+    /**
+     * Remove the specified Role from storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function destroy(Request $request, $id)
+    {
+        $role = Role::findOrFail($id);
+        $role->delete();
+
+        return 'Role successfully deleted';
     }
 }

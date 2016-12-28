@@ -9,9 +9,9 @@
             {
                 var self = this;
 
-                self.items        = inputs.items;
-                self.currentItem  = inputs.selected;
-                self.properties   = inputs.itemProperties;
+                self.items       = inputs.allItems;
+                self.currentItem = inputs.currentItem;
+                self.properties  = inputs.itemProperties;
 
                 self.selectedItem = self.items.findIndex(function(item)
                 {

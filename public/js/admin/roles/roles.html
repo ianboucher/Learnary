@@ -12,6 +12,10 @@
             <li><a href="groups">Groups</a></li>
         </ul>
 
+        <div>
+            <button class="btn btn-primary" ng-click="roles.addRole()">Add New Role</button>
+        </div>
+
         <div class="table-repsonsive">
             <table class="table">
                 <thead>
@@ -28,16 +32,18 @@
                         <td>{{ role.description }}</td>
                         <td>
                             <button ng-if="role.perms.length < 1"
-                                    ng-click="roles.editPermissions(role, roles.permissions, ['display_name', 'description'])"
+                                    ng-click="roles.managePermissions(role)"
                                     class="btn btn-xs btn-primary">
                                     Assign Permission
                             </button>
                             <button ng-repeat="perm in role.perms track by $index"
-                                    ng-click="roles.editPermissions(role, roles.permissions, ['display_name', 'description'])"
+                                    ng-click="roles.managePermissions(role)"
                                     class="btn btn-xs btn-success" >
                                     {{ perm.display_name }}
                             </button>
                         </td>
+                        <td><button class="btn btn-xs btn-primary" ng-click="roles.editRole(role)">Edit</button></td>
+                        <td><button class="btn btn-xs btn-danger" ng-click="roles.deleteRole(role, $index)">Delete</button></td>
                     </tr>
                 </tbody>
             </table>

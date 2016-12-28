@@ -32,20 +32,15 @@ Route::group(["prefix" => "v1.0.0"], function()
 
     Route::post('login', 'AuthenticateController@login');
 
-    Route::get('roles/all', 'RolesController@index');
-    Route::put('roles', 'RolesController@create');
-    Route::post('roles', 'RolesController@update');
-    Route::get('roles', 'RolesController@check');
+    Route::resource('roles',       'RolesController');
+    Route::resource('permissions', 'PermissionsController');
+    Route::resource('schools',     'SchoolsController');
+    Route::resource('groups',      'GroupsController');
 
-    Route::get('permissions/all', 'PermissionsController@index');
-    Route::put('permissions', 'PermissionsController@create');
-    Route::post('permissions', 'PermissionsController@update');
-    Route::post('permissions/roles', 'PermissionsController@attach');
-    Route::get('permissions', 'PermissionsController@check');
-
-    Route::resource('schools', 'SchoolsController');
-    Route::resource('groups', 'GroupsController');
-    Route::resource('users.groups', 'UserGroupsController');
+    Route::resource('users.groups',     'UserGroupsController');
+    Route::resource('user-roles',       'UserRolesController');
+    Route::resource('role-permissions', 'RolePermissionsController');
+    Route::resource('permission-roles', 'PermissionRolesController');
 
 });
 

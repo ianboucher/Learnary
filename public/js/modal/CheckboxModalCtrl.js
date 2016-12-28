@@ -9,13 +9,13 @@
             {
                 var self = this;
 
-                self.items      = inputs.items;
-                self.selected   = inputs.selected;
-                self.properties = inputs.itemProperties;
+                self.items        = inputs.allItems;
+                self.currentItems = inputs.currentItems;
+                self.properties   = inputs.itemProperties;
 
                 self.selectedItems = {};
 
-                self.selected.forEach(function(item)
+                self.currentItems.forEach(function(item)
                 {
                     self.selectedItems[item.id] = true;
                 });

@@ -12,7 +12,7 @@
 
                 self.loadPermissions = function()
                 {
-                    return $http.get("api/v1.0.0/permissions/all")
+                    return $http.get("api/v1.0.0/permissions")
                         .then(function(permissions)
                         {
                             return data.permissions = permissions.data;
@@ -36,6 +36,14 @@
                 };
 
 
+                self.addPermission = function(permission)
+                {
+                    return $http.post("/api/v1.0.0/permissions", {
+                        "permission" : permission
+                    });
+                };
+
+
                 self.editPermission = function(permission)
                 {
                     return $http.post("/api/v1.0.0/permissions/" + permission.id, {
@@ -47,6 +55,14 @@
                 self.deletePermission = function(permission)
                 {
                     $http.delete("/api/v1.0.0/permissions/" + permission.id);
+                };
+
+
+                self.manageRoles = function(permission, roleIds)
+                {
+                    return $http.put("/api/v1.0.0/permission-roles/" + permission.id, {
+                        "roles" : roleIds
+                    });
                 };
 
 
