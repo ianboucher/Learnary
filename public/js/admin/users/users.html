@@ -42,12 +42,12 @@
                         </td>
                         <td>
                             <button ng-if="user.roles.length < 1"
-                                    ng-click="users.checkboxModal(user, users.roles, 'roles', ['display_name', 'description'])"
+                                    ng-click="users.editRoles(user, users.roles, ['display_name', 'description'])"
                                     class="btn btn-xs btn-primary">
                                     Assign Role
                             </button>
                             <button ng-repeat="role in user.roles track by $index"
-                                    ng-click="users.editRoles(user, users.roles, 'roles', ['display_name', 'description'])"
+                                    ng-click="users.editRoles(user, users.roles, ['display_name', 'description'])"
                                     class="btn btn-xs btn-success" >
                                     {{ role.display_name }}
                             </button>

@@ -28,12 +28,12 @@
                         <td>{{ role.description }}</td>
                         <td>
                             <button ng-if="role.perms.length < 1"
-                                    ng-click="roles.launchModal(role)"
+                                    ng-click="roles.editPermissions(role, roles.permissions, ['display_name', 'description'])"
                                     class="btn btn-xs btn-primary">
                                     Assign Permission
                             </button>
                             <button ng-repeat="perm in role.perms track by $index"
-                                    ng-click="roles.launchModal(role)"
+                                    ng-click="roles.editPermissions(role, roles.permissions, ['display_name', 'description'])"
                                     class="btn btn-xs btn-success" >
                                     {{ perm.display_name }}
                             </button>

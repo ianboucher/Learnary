@@ -10,8 +10,7 @@
                 var self = this;
 
                 self.items        = inputs.items;
-                self.itemName     = inputs.itemName;
-                self.currentItem  = inputs.user[self.itemName];
+                self.currentItem  = inputs.selected;
                 self.properties   = inputs.itemProperties;
 
                 self.selectedItem = self.items.findIndex(function(item)
@@ -24,7 +23,7 @@
                 {
                     $uibModalInstance.close(self.items[self.selectedItem]);
                 };
-                
+
 
                 self.cancel = function()
                 {

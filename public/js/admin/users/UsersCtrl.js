@@ -57,26 +57,26 @@
                 };
 
 
-                self.editRoles = function(user, items, itemName, itemProperties)
+                self.editRoles = function(user, items, itemProperties)
                 {
                     var additionalData = {
-                        "user"           : user,
+                        "parent"         : user,
+                        "selected"       : user.roles,
                         "items"          : items,
-                        "itemName"       : itemName,
                         "itemProperties" : itemProperties
                     }
 
                     ModalService.createModal("/js/modal/checkbox_modal.html", "CheckboxModalCtrl", additionalData)
                         .then(function(selectedItemIds)
                         {
-                            return $http.post("/api/v1.0.0/" + itemName, {
-                                [itemName] : selectedItemIds,
-                                "email"    : user.email
+                            return $http.post("/api/v1.0.0/roles", {
+                                "roles" : selectedItemIds,
+                                "email" : user.email
                             });
                         })
                         .then(function(updatedItems)
                         {
-                            user[itemName] = updatedItems.data;
+                            user.roles = updatedItems.data;
                         })
                         .catch(function(error)
                         {
@@ -88,9 +88,9 @@
                 self.radioModal = function(user, items, itemName, itemProperties)
                 {
                     var additionalData = {
-                        "user"           : user,
+                        "parent"         : user,
+                        "selected"       : user.group,
                         "items"          : items,
-                        "itemName"       : itemName,
                         "itemProperties" : itemProperties
                     }
 
