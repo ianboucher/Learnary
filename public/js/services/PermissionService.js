@@ -46,7 +46,7 @@
 
                 self.editPermission = function(permission)
                 {
-                    return $http.post("/api/v1.0.0/permissions/" + permission.id, {
+                    return $http.put("/api/v1.0.0/permissions/" + permission.id, {
                         "permissions" : permission
                     });
                 };

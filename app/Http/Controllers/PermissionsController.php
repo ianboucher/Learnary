@@ -28,9 +28,9 @@ class PermissionsController extends Controller
     public function store(Request $request)
     {
         $permission = new Permission();
-        $permission->name        = $request->input('name');
-        $permission->displayName = $request->input('display-name');
-        $permission->description = $request->input('description');
+        $permission->name        = $request->input('permission.name');
+        $permission->display_name = $request->input('permission.display_name');
+        $permission->description = $request->input('permission.description');
         $permission->save();
 
         return response()->json(compact('permission'));
@@ -39,12 +39,12 @@ class PermissionsController extends Controller
 
     // TODO: are there verbs compatible with REST that could be user here?
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $permission = new Permission();
-        $permission->name        = $request->input('name');
-        $permission->displayName = $request->input('display-name');
-        $permission->description = $request->input('description');
+        $permission = Permission::findOrFail($id);
+        $permission->name        = $request->input('permission.name');
+        $permission->display_name = $request->input('permission.display_name');
+        $permission->description = $request->input('permission.description');
         $permission->save();
 
         return response()->json(compact('permission'));
@@ -67,4 +67,18 @@ class PermissionsController extends Controller
         ]));
     }
     // TODO: is there a method for revoking permissions?
+
+    /**
+     * Remove the specified Permission from storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function destroy(Request $request, $id)
+    {
+        $role = Permission::findOrFail($id);
+        $role->delete();
+
+        return 'Role successfully deleted';
+    }
 }

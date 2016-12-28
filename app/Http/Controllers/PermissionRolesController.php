@@ -15,7 +15,7 @@ class PermissionRolesController extends Controller
      * @param  Request $request
      * @return Response
      */
-     public function attach(Request $request, $id)
+     public function update(Request $request, $id)
      {
          $permission = Permission::findOrFail($id);
          $role_ids   = $request->get('roles');
