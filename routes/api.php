@@ -41,7 +41,7 @@ Route::group(["prefix" => "v1.0.0"], function()
     Route::resource('user-roles',       'UserRolesController');
     Route::resource('role-permissions', 'RolePermissionsController');
     Route::resource('permission-roles', 'PermissionRolesController');
-
+    Route::resource('school-groups',    'SchoolGroupsController');
 });
 
 

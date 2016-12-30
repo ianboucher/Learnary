@@ -15,7 +15,8 @@ class SchoolsController extends Controller
      */
     public function index()
     {
-        return School::with('groups')->with('users')->get();
+        $school = School::with('groups', 'users')->get();
+        return $school;
     }
 
     /**
@@ -28,7 +29,7 @@ class SchoolsController extends Controller
     {
         $school = new School;
 
-        $school->name = $request->input('name');
+        $school->name = $request->input('school.name');
         $school->save();
 
         return 'School created successfully with id '. $school->id;
@@ -56,7 +57,7 @@ class SchoolsController extends Controller
     {
         $school = School::find($id);
 
-        $school->name = $request->input('name');
+        $school->name = $request->input('school.name');
         $school->save();
 
         return 'School # '. $school->id . ' successfully updated';

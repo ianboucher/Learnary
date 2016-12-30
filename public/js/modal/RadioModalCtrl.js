@@ -9,14 +9,18 @@
             {
                 var self = this;
 
-                self.items       = inputs.allItems;
-                self.currentItem = inputs.currentItem;
-                self.properties  = inputs.itemProperties;
+                self.items        = inputs.allItems;
+                self.currentItem  = inputs.currentItem;
+                self.properties   = inputs.itemProperties;
+                self.selectedItem = {};
 
-                self.selectedItem = self.items.findIndex(function(item)
+                if (self.currentItem)
                 {
-                    return item.id === self.currentItem.id;
-                });
+                    self.selectedItem = self.items.findIndex(function(item)
+                    {
+                        return item.id === self.currentItem.id;
+                    });
+                }
 
 
                 self.submit = function(index)

@@ -52,6 +52,8 @@
     <script src="/js/services/RoleService.js"></script>
     <script src="/js/services/PermissionService.js"></script>
     <script src="/js/services/GroupService.js"></script>
+    <script src="/js/services/SchoolService.js"></script>
+
     <!-- <script src="/js/admin/services/AdminService.js"></script> -->
 
     <script src="/js/landing/LandingCtrl.js"></script>
