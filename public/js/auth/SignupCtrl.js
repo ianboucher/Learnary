@@ -4,17 +4,28 @@
 
     angular
         .module("learnary")
-        .controller("SignupCtrl", ["$scope", "$auth", "$http", "$state", "SessionService",
-            function SignupCtrl($scope, $auth, $http, $state, SessionService)
+        .controller("SignupCtrl", [
+            "$auth",
+            "$http",
+            "$state",
+            "SessionService",
+            "RoleService",
+            function SignupCtrl($auth, $http, $state, SessionService, RoleService)
             {
-                var self        = this,
-                    rolesEnum   = {
-                        "student" : "3",
-                        "staff"   : "2"
-                    };
+                var self  = this
 
-                $scope.credentials = {};
-                $scope.role        = "student";
+                RoleService.loadRoles().then(function(roles)
+                {
+                    self.roles = roles;
+                })
+                .catch(function(error)
+                {
+                    console.log(error);
+                });
+
+
+                self.credentials  = {};
+                self.selectedRole = "student";
 
 
                 // QUESTION: I need to provide the option of specifying a school
@@ -35,7 +46,7 @@
 
                 self.signup = function()
                 {
-                    $auth.signup($scope.credentials).then (
+                    $auth.signup(self.credentials).then (
 
                         function(response)
                         {
@@ -55,10 +66,15 @@
                             // preferable to pass role names and have the API find
                             // the relevant IDs before updating the roles?
 
-                            var email = $scope.credentials.email,
-                                role  = [rolesEnum[$scope.role]];
+                            var user = response.data.user,
+                                role  = self.roles.find(function(role)
+                                {
+                                    return role.name === self.selectedRole;
+                                });
 
-                            return $http.post("/api/v1.0.0/roles", { "roles": role, "email": email } );
+                            return $http.put("/api/v1.0.0/user-roles/" + user.id, {
+                                "roles" : [role.id]
+                            });
                         },
                         function(error)
                         {
@@ -75,7 +91,7 @@
                             }
                             else
                             {
-                                SessionService.login($scope.credentials, "orientation");
+                                SessionService.login(self.credentials, "orientation");
                             }
                         }
                     );

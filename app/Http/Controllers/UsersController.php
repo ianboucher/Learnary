@@ -55,7 +55,7 @@ class UsersController extends Controller
 
                 $token = JWTAuth::fromUser($user);
 
-                return response()->json(compact('token'));
+                return response()->json(['token' => $token, 'user' => $user]);
             }
         }
 
@@ -70,7 +70,7 @@ class UsersController extends Controller
 
         $token = JWTAuth::fromUser($user);
 
-        return response()->json(compact('token'));
+        return response()->json(['token' => $token, 'user' => $user]);
     }
 
 

@@ -12,6 +12,10 @@
             <li class="active"><a href="groups">Groups</a></li>
         </ul>
 
+        <div>
+            <button class="btn btn-primary" ng-click="groups.addGroup()">Add New Group</button>
+        </div>
+
         <div class="table-repsonsive">
             <table class="table">
                 <thead>
@@ -24,8 +28,11 @@
 
                 <tbody ng-repeat="group in groups.data track by $index">
                     <td>{{ group.name }}</td>
-                    <td><button ng-click="groups.launchModal(group)" class="btn btn-xs btn-primary">View</button>
-                    <td><button ng-click="groups.launchModal(group)" class="btn btn-xs btn-primary">View</button>
+                    <td>{{ group.school.name }}</td>
+                    <!-- <td><button ng-click="schools.manageGroups(school)" class="btn btn-xs btn-success">Manage</button> -->
+                    <td><button ng-click="groups.manageUsers(group)" class="btn btn-xs btn-success">Manage</button>
+                    <td><button ng-click="groups.editGroup(group)" class="btn btn-xs btn-primary">Edit</button>
+                    <td><button ng-click="groups.deleteGroup(group, $index)" class="btn btn-xs btn-danger">Delete</button>
                 </tbody>
             </table>
         </div>

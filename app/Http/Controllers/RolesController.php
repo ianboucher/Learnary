@@ -33,7 +33,7 @@ class RolesController extends Controller
         $role->description  = $request->input('role.description');
         $role->save();
 
-        return response()->json('Role created');
+        return response()->json($role);
     }
 
 

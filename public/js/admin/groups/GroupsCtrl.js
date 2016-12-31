@@ -4,76 +4,105 @@
 
     angular
         .module("learnary")
-        .controller("GroupsCtrl", ["$scope", "$http", "$uibModal", "AdminService",
-            function GroupsCtrl($scope, $http, $uibModal, AdminService)
+        .controller("GroupsCtrl", [
+            "$scope",
+            "$http",
+            "$uibModal",
+            "SchoolService",
+            "UserService",
+            "GroupService",
+            "ModalService",
+            function GroupsCtrl($scope, $http, $uibModal, SchoolService, UserService, GroupService, ModalService)
             {
                 var self = this;
 
-                $scope.$watch(function() { return AdminService.data },
-                    function()
+                GroupService.loadGroups()
+                    .then(function(groups)
                     {
-                        self.data        = AdminService.getGroups();
-                    }, true
-                );
-
-
-                self.launchModal = function(group)
-                {
-                    var modalInstance = $uibModal.open(
+                        self.data = groups;
+                        return UserService.loadUsers();
+                    })
+                    .then(function(users)
                     {
-                        controller   : "ModalCtrl",
-                        controllerAs : "$ctrl",
-                        templateUrl  : "/js/modal/button_modal.html",
-                        resolve      : {
-                            items: function()
-                            {
-                                return group.users;
-                            },
-                            selected: function()
-                            {
-                                return null;
-                            },
-                            columns: function()
-                            {
-                                return ["Name", "Action"];
-                            },
-                            properties: function()
-                            {
-                                return ["name"];
-                            }
-                        }
+                        self.users           = users;
+                        self.unassignedUsers = users.filter(function(user)
+                        {
+                            return user.group_id === null;
+                        });
+                    })
+                    .catch(function(error)
+                    {
+                        console.log(error);
                     });
 
-                    // TODO: figure out what to do with the modal, if anything
 
-                    modalInstance.result.then (
-                        function(selectedRoles)
+                self.addGroup = function()
+                {
+                    ModalService.createModal("/js/modal/form_modal_groups.html", "FormModalCtrl")
+                        .then(function(group)
                         {
-                            var updatedRoleIds = [];
-                            var postData = {};
-
-                            for (var id in selectedRoles)
-                            {
-                                if (selectedRoles[id])
-                                {
-                                    updatedRoleIds.push(id);
-                                }
-                            }
-
-                            postData = { roles: updatedRoleIds, email: user.email };
-
-                            return $http.post("/api/v1.0.0/roles", postData);
-                        }
-                    ).then (
-                        function(updatedRoles)
-                        {
-                            user.roles = updatedRoles.data;
-                        },
-                        function(error)
+                            GroupService.addGroup(group);
+                            group.users = [];
+                            self.data.push(group);
+                        })
+                        .catch(function(error)
                         {
                             console.log("modal cancelled");
-                        }
-                    );
+                        });
+                };
+
+
+                self.editGroup = function(group)
+                {
+                    ModalService.createModal("/js/modal/form_modal_groups.html", "FormModalCtrl", group)
+                        .then(function(updatedGroup)
+                        {
+                            GroupService.editGroup(updatedGroup);
+                        })
+                        .catch(function(error)
+                        {
+                            console.log("modal cancelled");
+                        });
+                };
+
+
+                self.deleteGroup = function(group, index)
+                {
+                    GroupService.deleteGroup(group);
+                    self.data.splice(index);
+                };
+
+
+                self.manageUsers = function(group)
+                {
+                    var additionalData = {
+                        "currentItems"   : group.users,
+                        "allItems"       : group.users.concat(self.unassignedUsers),
+                        "itemProperties" : ["name", "email", "group.name"]
+                    }
+
+                    ModalService.createModal("/js/modal/checkbox_modal.html", "CheckboxModalCtrl", additionalData)
+                        .then(function(selectedUserIds)
+                        {
+                            return GroupService.manageUsers(group, selectedUserIds)
+                        })
+                        .then(function(updatedUsers)
+                        {
+                            group.users = updatedUsers.data;
+                            return UserService.loadUsers();
+                        })
+                        .then(function(users)
+                        {
+                            self.users           = users;
+                            self.unassignedUsers = users.filter(function(user)
+                            {
+                                return user.group_id === null;
+                            });
+                        })
+                        .catch(function(error)
+                        {
+                            console.log("modal cancelled");
+                        });
                 };
             }
         ]);

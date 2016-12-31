@@ -53,7 +53,7 @@
                 self.deleteUser = function(user, index)
                 {
                     UserService.deleteUser(user);
-                    self.data.splice(index);
+                    self.data.splice(index, 1);
                 }
 
 

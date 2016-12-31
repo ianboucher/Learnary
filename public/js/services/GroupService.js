@@ -34,19 +34,27 @@
 
                 self.addGroup = function(group)
                 {
-                    return $http.post("/api/v1.0.0/groups", { "group" : role });
+                    return $http.post("/api/v1.0.0/groups", { "group" : group });
                 };
 
 
                 self.editGroup = function(group)
                 {
-                    return $http.post("/api/v1.0.0/groups/" + group.id, { "group" : group });
+                    return $http.put("/api/v1.0.0/groups/" + group.id, { "group" : group });
                 };
 
 
                 self.deleteGroup = function(group)
                 {
                     $http.delete("/api/v1.0.0/groups/" + group.id);
+                };
+
+
+                self.manageUsers = function(group, userIds)
+                {
+                    return $http.put("/api/v1.0.0/group-users/" + group.id, {
+                        "users" : userIds
+                    });
                 };
 
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Group;
+use App\School;
 
 class GroupsController extends Controller
 {
@@ -23,14 +24,22 @@ class GroupsController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request, $school_id)
+    public function store(Request $request)
     {
-        $school = School::find($school_id);
+        if ($request->has('group.school'))
+        {
+            $school = School::where('name', '=', $request->input('group.school'))->first();
+            $group  = $school->groups()->create(['name' => $request->input('group.name')]);
+        }
+        else
+        {
+            $group       = new Group();
+            $group->name = $request->input('group.name');
+        }
 
-        $group = $school->groups()->create(['name' => $request->input('name')]);
         $group->save();
 
-        return 'Group created successfully with id '. $group->id;
+        return response()->json($group);
     }
 
     /**
@@ -54,11 +63,17 @@ class GroupsController extends Controller
     public function update(Request $request, $id)
     {
         $group = Group::find($id);
+        $group->name = $request->input('group.name');
 
-        $group->name = $request->input('name');
+        if ($request->has('group.school'))
+        {
+            $school = School::where('name', '=', $request->input('group.school'))->first();
+            $group->school()->associate($school);
+        }
+
         $group->save();
 
-        return 'Group # '. $group->id . ' successfully updated';
+        return response()->json($group);
     }
 
 

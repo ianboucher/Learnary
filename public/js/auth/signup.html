@@ -5,30 +5,30 @@
         <h3>Sign Up</h3>
         <form>
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Username" ng-model="credentials.name">
+                <input type="text" class="form-control" placeholder="Username" ng-model="signup.credentials.name">
             </div>
 
             <div class="form-group">
-                <input type="email" class="form-control" placeholder="Email" ng-model="credentials.email">
+                <input type="email" class="form-control" placeholder="Email" ng-model="signup.credentials.email">
             </div>
 
             <div class="form-group">
-                <input type="password" class="form-control" placeholder="Password" ng-model="credentials.password">
+                <input type="password" class="form-control" placeholder="Password" ng-model="signup.credentials.password">
             </div>
 
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="School" ng-model="credentials.school">
+                <input type="text" class="form-control" placeholder="School" ng-model="signup.credentials.school">
             </div>
 
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Class or Group" ng-model="credentials.group">
+                <input type="text" class="form-control" placeholder="Class or Group" ng-model="signup.credentials.group">
             </div>
 
             <button class="btn btn-primary" ng-click="signup.signup()">Sign Me Up!</button>
 
             <div class="form-group pull-right">
                 <label>Teacher:</label>
-                <input type="checkbox" ng-model="role" ng-false-value="'student'" ng-true-value="'staff'"></input>
+                <input type="checkbox" ng-model="signup.selectedRole" ng-false-value="'student'" ng-true-value="'staff'"></input>
             </div>
         </form>
     </div>
