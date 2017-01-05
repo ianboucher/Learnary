@@ -8,7 +8,6 @@ use App\User;
 
 class GroupUsersController extends Controller
 {
-
     /**
      * Update/change the association between User and Group.
      *

@@ -9,6 +9,8 @@
             {
                 var self = this;
 
+                console.log(inputs);
+
                 self.items        = inputs.allItems;
                 self.currentItems = inputs.currentItems;
                 self.properties   = inputs.itemProperties;

@@ -4,15 +4,16 @@
 
     angular
         .module("learnary")
-        .service("SchoolService", ["$http", "$auth",
-            function SchoolService($http, $auth)
+        .service("SchoolService", ["$http", "$auth", "$cacheFactory",
+            function SchoolService($http, $auth, $cacheFactory)
             {
                 var self = this;
                 var data = {};
+                var $httpDefaultCache = $cacheFactory.get("$http");
 
                 self.loadSchools = function()
                 {
-                    return $http.get("api/v1.0.0/schools")
+                    return $http.get("api/v1.0.0/schools", { "cache" : true })
                         .then(function(schools)
                         {
                             return data.schools = schools.data;
@@ -38,6 +39,8 @@
 
                 self.addSchool = function(school)
                 {
+                    $httpDefaultCache.remove("api/v1.0.0/schools");
+
                     return $http.post("/api/v1.0.0/schools", {
                         "school" : school
                     });
@@ -46,6 +49,8 @@
 
                 self.editSchool = function(school)
                 {
+                    $httpDefaultCache.remove("api/v1.0.0/schools");
+
                     return $http.put("/api/v1.0.0/schools/" + school.id, {
                         "school" : school
                     });
@@ -54,12 +59,17 @@
 
                 self.deleteSchool = function(school)
                 {
+                    $httpDefaultCache.remove("api/v1.0.0/schools");
+
                     $http.delete("/api/v1.0.0/schools/" + school.id);
                 };
 
 
                 self.manageGroups = function(school, groupIds)
                 {
+                    $httpDefaultCache.remove("api/v1.0.0/schools");
+                    $httpDefaultCache.remove("api/v1.0.0/groups");
+
                     return $http.put("/api/v1.0.0/school-groups/" + school.id, {
                         "groups" : groupIds
                     });

@@ -20,11 +20,13 @@
                     .then(function(schools)
                     {
                         self.data = schools;
+                        console.log(self.data);
                         return UserService.loadUsers();
                     })
                     .then(function(users)
                     {
                         self.users = users;
+                        console.log(users[5]);
                         self.unassignedUsers = users.filter(function(user)
                         {
                             return user.school_id === null;
@@ -120,12 +122,12 @@
                 // so it seems incorrect to attempt to edit the relationship at this
                 // level. However, from an admin user perspective, it seems reasonable
                 // to have some control over the users belonging to a particular school.
-                
+
                 self.manageUsers = function(school)
                 {
                     var additionalData = {
                         "currentItems"   : school.users,
-                        "allItems"       : school.users.concat(self.unassignedUsers),
+                        "allItems"       : school.users,//.concat(self.unassignedUsers),
                         "itemProperties" : ["name", "email", "group.name"]
                     }
 
