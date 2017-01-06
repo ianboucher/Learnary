@@ -49,7 +49,7 @@
 
                 self.editSchool = function(school)
                 {
-                    $httpDefaultCache.remove("api/v1.0.0/schools");
+                    $httpDefaultCache.removeAll();
 
                     return $http.put("/api/v1.0.0/schools/" + school.id, {
                         "school" : school
@@ -59,7 +59,7 @@
 
                 self.deleteSchool = function(school)
                 {
-                    $httpDefaultCache.remove("api/v1.0.0/schools");
+                    $httpDefaultCache.removeAll();
 
                     $http.delete("/api/v1.0.0/schools/" + school.id);
                 };
@@ -67,8 +67,7 @@
 
                 self.manageGroups = function(school, groupIds)
                 {
-                    $httpDefaultCache.remove("api/v1.0.0/schools");
-                    $httpDefaultCache.remove("api/v1.0.0/groups");
+                    $httpDefaultCache.removeAll();
 
                     return $http.put("/api/v1.0.0/school-groups/" + school.id, {
                         "groups" : groupIds

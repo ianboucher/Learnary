@@ -20,13 +20,11 @@
                     .then(function(schools)
                     {
                         self.data = schools;
-                        console.log(self.data);
                         return UserService.loadUsers();
                     })
                     .then(function(users)
                     {
                         self.users = users;
-                        console.log(users[5]);
                         self.unassignedUsers = users.filter(function(user)
                         {
                             return user.school_id === null;
