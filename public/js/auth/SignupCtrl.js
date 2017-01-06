@@ -10,7 +10,8 @@
             "$state",
             "SessionService",
             "RoleService",
-            function SignupCtrl($auth, $http, $state, SessionService, RoleService)
+
+            function SignupCtrl ($auth, $http, $state, SessionService, RoleService)
             {
                 var self  = this
 

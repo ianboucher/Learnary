@@ -19,6 +19,7 @@
         ])
         .run(function ($rootScope, $state)
         {
+            // Add previous state to ui-router's $state to enable a 'back' redirect
             $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState)
             {
                 $state.previous = fromState;

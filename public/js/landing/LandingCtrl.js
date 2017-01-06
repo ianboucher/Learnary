@@ -6,6 +6,6 @@
         .module("learnary")
         .controller("LandingCtrl", function LandingCtrl()
         {
-            this.heroTitle = "Dave!"
+            //
         });
 })();

@@ -4,8 +4,11 @@
 
     angular
         .module("learnary")
-        .controller("LoginCtrl", ["$scope", "SessionService",
-            function LoginCtrl($scope, SessionService)
+        .controller("LoginCtrl", [
+            "$scope",
+            "SessionService",
+
+            function LoginCtrl ($scope, SessionService)
             {
                 var self = this;
 

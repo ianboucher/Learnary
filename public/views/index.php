@@ -47,6 +47,7 @@
 
     <!-- Bootstrapping -->
     <script src="/js/app.module.js"></script>
+    <script src="/js/app.config.js"></script>
 
     <!-- Services -->
     <script src="/js/services/SessionService.js"></script>

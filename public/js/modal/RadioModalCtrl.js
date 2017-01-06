@@ -4,8 +4,10 @@
 
     angular
         .module("learnary")
-        .controller("RadioModalCtrl", ["$uibModalInstance", "inputs",
-            function RadioModalCtrl($uibModalInstance, inputs)
+        .controller("RadioModalCtrl", [
+            "$uibModalInstance",
+            "inputs",
+            function RadioModalCtrl ($uibModalInstance, inputs)
             {
                 var self = this;
 

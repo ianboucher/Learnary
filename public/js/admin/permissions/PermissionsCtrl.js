@@ -10,6 +10,7 @@
             "RoleService",
             "PermissionService",
             "ModalService",
+
             function PermissionsCtrl($http, $uibModal, RoleService, PermissionService, ModalService)
             {
                 var self = this;

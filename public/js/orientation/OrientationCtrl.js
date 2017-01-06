@@ -4,7 +4,8 @@
 
     angular
         .module("learnary")
-        .controller("OrientationCtrl", ["SessionService",
+        .controller("OrientationCtrl", [
+            "SessionService",
             function OrientationCtrl(SessionService)
             {
                 var self = this;

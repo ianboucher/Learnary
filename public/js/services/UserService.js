@@ -4,7 +4,11 @@
 
     angular
         .module("learnary")
-        .service("UserService", ["$http", "$auth", "$cacheFactory",
+        .service("UserService", [
+            "$http",
+            "$auth",
+            "$cacheFactory",
+
             function UserService($http, $auth, $cacheFactory)
             {
                 var self = this;

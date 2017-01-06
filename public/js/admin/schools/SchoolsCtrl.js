@@ -12,6 +12,7 @@
             "UserService",
             "GroupService",
             "ModalService",
+
             function SchoolsCtrl($scope, $http, $uibModal, SchoolService, UserService, GroupService, ModalService)
             {
                 var self = this;

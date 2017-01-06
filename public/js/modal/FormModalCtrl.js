@@ -4,8 +4,11 @@
 
     angular
         .module("learnary")
-        .controller("FormModalCtrl", ["$uibModalInstance", "inputs",
-            function FormModalCtrl($uibModalInstance, inputs)
+        .controller("FormModalCtrl", [
+            "$uibModalInstance",
+            "inputs",
+
+            function FormModalCtrl ($uibModalInstance, inputs)
             {
                 var self = this;
 

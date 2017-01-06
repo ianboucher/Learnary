@@ -4,8 +4,11 @@
 
     angular
         .module("learnary")
-        .controller("CheckboxModalCtrl", ["$uibModalInstance", "inputs",
-            function CheckboxModalCtrl($uibModalInstance, inputs)
+        .controller("CheckboxModalCtrl", [
+            "$uibModalInstance",
+            "inputs",
+
+            function CheckboxModalCtrl ($uibModalInstance, inputs)
             {
                 var self = this;
 

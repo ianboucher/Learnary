@@ -4,7 +4,13 @@
 
     angular
         .module("learnary")
-        .service("SessionService", ["$http", "$rootScope", "$auth", "$state", "$window",
+        .service("SessionService", [
+            "$http",
+            "$rootScope",
+            "$auth",
+            "$state",
+            "$window",
+
             function SessionService($http, $rootScope, $auth, $state, $window)
             {
                 var self = this;

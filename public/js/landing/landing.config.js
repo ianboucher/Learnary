@@ -4,24 +4,28 @@
 
     angular
         .module("learnary.landing")
-        .config(function ($stateProvider, $locationProvider)
-        {
-            $locationProvider
-                .html5Mode
-                ({
-                    "enabled"     : true,
-                    "requireBase" : false
-                });
+        .config([
+            "$stateProvider",
+            "$locationProvider",
 
-            $stateProvider
-                .state
-                (
-                    "landing",
-                    {
-                        "url"         : "/",
-                        "controller"  : "LandingCtrl as landing",
-                        "templateUrl" : "js/landing/landing.html"
-                    }
-                );
-        })
+            function LandingConfig($stateProvider, $locationProvider)
+            {
+                $locationProvider
+                    .html5Mode
+                    ({
+                        "enabled"     : true,
+                        "requireBase" : false
+                    });
+
+                $stateProvider
+                    .state
+                    (
+                        "landing",
+                        {
+                            "url"         : "/",
+                            "controller"  : "LandingCtrl as landing",
+                            "templateUrl" : "js/landing/landing.html"
+                        }
+                    );
+            }]);
 })();

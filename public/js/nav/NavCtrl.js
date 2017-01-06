@@ -4,8 +4,11 @@
 
     angular
         .module("learnary")
-        .controller("NavCtrl", ["$scope", "$rootScope", "SessionService",
-            function NavCtrl($scope, $rootScope, SessionService)
+        .controller("NavCtrl", [
+            "$scope",
+            "$rootScope",
+            "SessionService",
+            function NavCtrl ($scope, $rootScope, SessionService)
             {
                 var self = this;
 
@@ -22,7 +25,6 @@
                 {
                     $scope.currentUser = SessionService.currentUser;
                 });
-
             }
         ]);
 })();

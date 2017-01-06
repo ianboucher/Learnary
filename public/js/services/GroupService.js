@@ -4,8 +4,12 @@
 
     angular
         .module("learnary")
-        .service("GroupService", ["$http", "$auth", "$cacheFactory",
-            function GroupService($http, $auth, $cacheFactory)
+        .service("GroupService", [
+            "$http",
+            "$auth",
+            "$cacheFactory",
+
+            function GroupService ($http, $auth, $cacheFactory)
             {
                 var self = this;
                 var data = {};

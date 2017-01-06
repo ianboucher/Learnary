@@ -4,7 +4,10 @@
 
     angular
         .module("learnary")
-        .service("ModalService", ["$http", "$uibModal",
+        .service("ModalService", [
+            "$http",
+            "$uibModal",
+
             function ModalService($http, $uibModal)
             {
                 var self = this;

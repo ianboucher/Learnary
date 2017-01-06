@@ -11,6 +11,7 @@
             "RoleService",
             "PermissionService",
             "ModalService",
+
             function RolesCtrl($scope, $http, $uibModal, RoleService, PermissionService, ModalService)
             {
                 var self = this;

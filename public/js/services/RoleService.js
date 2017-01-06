@@ -4,7 +4,11 @@
 
     angular
         .module("learnary")
-        .service("RoleService", ["$http", "$auth", "$cacheFactory",
+        .service("RoleService", [
+            "$http",
+            "$auth",
+            "$cacheFactory",
+
             function RoleService($http, $auth, $cacheFactory)
             {
                 var self = this;
