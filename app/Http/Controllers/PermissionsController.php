@@ -28,9 +28,9 @@ class PermissionsController extends Controller
     public function store(Request $request)
     {
         $permission = new Permission();
-        $permission->name        = $request->input('permission.name');
+        $permission->name         = $request->input('permission.name');
         $permission->display_name = $request->input('permission.display_name');
-        $permission->description = $request->input('permission.description');
+        $permission->description  = $request->input('permission.description');
         $permission->save();
 
         return response()->json(compact('permission'));
@@ -42,9 +42,9 @@ class PermissionsController extends Controller
     public function update(Request $request, $id)
     {
         $permission = Permission::findOrFail($id);
-        $permission->name        = $request->input('permission.name');
+        $permission->name         = $request->input('permission.name');
         $permission->display_name = $request->input('permission.display_name');
-        $permission->description = $request->input('permission.description');
+        $permission->description  = $request->input('permission.description');
         $permission->save();
 
         return response()->json(compact('permission'));

@@ -6,12 +6,11 @@
         .module("learnary")
         .service("SessionService", [
             "$http",
-            "$rootScope",
             "$auth",
             "$state",
             "$window",
 
-            function SessionService($http, $rootScope, $auth, $state, $window)
+            function SessionService($http, $auth, $state, $window)
             {
                 var self = this;
 
@@ -40,35 +39,30 @@
 
                 self.login = function(credentials, nextState)
                 {
-                    $auth.login(credentials).then (
+                    $auth.login(credentials).then(function()
+                    {
+                        return $http.get("api/v1.0.0/users/show");
+                    })
+                    .then(function(user) // Retrieve the authenticated current user
+                    {
+                        self.currentUser     = user.data.user;
+                        self.isAuthenticated = $auth.isAuthenticated();
+                        $window.localStorage.setItem("currentUser", angular.toJson(self.currentUser));
+                        $http.post("api/v1.0.0/users/" + self.currentUser.id + "/sessions")
 
-                        function()
+                        if (nextState)
                         {
-                            return $http.get("api/v1.0.0/users/show");
-                        },
-                        function(error)
-                        {
-                            // TODO: Handle error properly
-                            // QUESTION: What's the best way to hanlde these kind of errors?
-                            self.loginError     = true;
-                            self.loginErrorText = error.data.error;
-                            window.alert("Email or password invalid");
+                            $state.go(nextState);
                         }
-                    ).then ( // Retrieve the authenticated current user
-
-                        function(user)
-                        {
-                            self.currentUser     = user.data.user;
-                            self.isAuthenticated = $auth.isAuthenticated();
-                            $rootScope.$broadcast("login");
-                            $window.localStorage.setItem("currentUser", angular.toJson(self.currentUser));
-
-                            if (nextState)
-                            {
-                                $state.go(nextState);
-                            }
-                        }
-                    )
+                    })
+                    .catch(function(error)
+                    {
+                        // TODO: Handle error properly
+                        // QUESTION: What's the best way to handle these kind of errors?
+                        self.loginError     = true;
+                        self.loginErrorText = error.data.error;
+                        window.alert("Email or password invalid");
+                    })
                 };
 
 

@@ -55,6 +55,7 @@
     <script src="/js/services/PermissionService.js"></script>
     <script src="/js/services/GroupService.js"></script>
     <script src="/js/services/SchoolService.js"></script>
+    <script src="/js/services/GameService.js"></script>
 
     <!-- Landing/Welcome Module -->
     <script src="/js/landing/landing.module.js"></script>
