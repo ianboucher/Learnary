@@ -15,17 +15,15 @@
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,800,600,700,300">
     <link rel="stylesheet" type="text/css" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- <link rel="stylesheet" type="text/css" href="/styles/normalize.css"> -->
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
     <link rel="stylesheet" type="text/css" href="/css/landing.css">
     <link rel="stylesheet" type="text/css" href="/css/nav.css">
-
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <!-- <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet"> -->
 
     <!-- <script src="../../assets/js/ie-emulation-modes-warning.js"></script> -->
-
 </head>
 
 <body>
@@ -82,6 +80,12 @@
     <script src="/js/orientation/orientation.module.js"></script>
     <script src="/js/orientation/orientation.config.js"></script>
     <script src="/js/orientation/OrientationCtrl.js"></script>
+
+    <!-- Game Module -->
+    <script src="/js/games/games.module.js"></script>
+    <script src="/js/games/games.config.js"></script>
+    <script src="/js/games/PlayCtrl.js"></script>
+    <script src="/js/games/pongGame.js"></script>
 
 
 

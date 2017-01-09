@@ -3,7 +3,7 @@
     "use strict";
 
     angular
-        .module("learnary.orientation")
+        .module("learnary.games")
         .config([
 
             "$stateProvider",
@@ -21,11 +21,11 @@
                 $stateProvider
                     .state
                     (
-                        "orientation",
+                        "play",
                         {
-                            "url"         : "/orientation",
-                            "controller"  : "OrientationCtrl as orientation",
-                            "templateUrl" : "js/orientation/orientation.html"
+                            "url"         : "/play",
+                            "controller"  : "PlayCtrl as play",
+                            "templateUrl" : "js/games/play.html"
                         }
                     )
             }

@@ -15,6 +15,7 @@
             "learnary.admin",
             "learnary.auth",
             "learnary.orientation",
+            "learnary.games"
             // "learnary.shared" (modals?, nav?)
         ])
         .run(function ($rootScope, $state)

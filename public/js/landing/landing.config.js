@@ -5,6 +5,7 @@
     angular
         .module("learnary.landing")
         .config([
+            
             "$stateProvider",
             "$locationProvider",
 
@@ -27,5 +28,6 @@
                             "templateUrl" : "js/landing/landing.html"
                         }
                     );
-            }]);
+            }
+        ]);
 })();
