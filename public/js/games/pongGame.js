@@ -35,6 +35,8 @@
                     context.fill();
                 }
 
+                // TODO: Break-up the following 'update' method
+
                 Ball.prototype.update = function(paddle1, paddle2, boardWidth, boardHeight, scope)
                 {
                     this.x += this.xSpeed;
@@ -78,6 +80,7 @@
                             if (scope.playerScore >= 5)
                             {
                                 scope.playerWin = true;
+                                scope.$broadcast('game end');
                             }
                         });
                     }
@@ -95,6 +98,7 @@
                             if (scope.computerScore >= 5)
                             {
                                 scope.computerWin = true;
+                                scope.$broadcast('game end');
                             }
                         });
                     }
@@ -227,6 +231,7 @@
 
                     link: function(scope, element, attributes)
                     {
+                        scope.gameName      = "Pong";
                         scope.playerScore   = 0;
                         scope.computerScore = 0;
                         scope.playerWin     = false;
@@ -258,17 +263,17 @@
                         };
 
 
-                        var step = function()
+                        scope.step = function()
                         {
                             if (scope.playerScore < 5 && scope.computerScore < 5)
                             {
                                 update();
                                 renderBoard();
-                                animate(step);
+                                animate(scope.step);
                             }
                         };
 
-                        step(); //-------------------------------------------------- ToDo: Trigger with button
+                        renderBoard();
 
                         var keysDown = {};
 

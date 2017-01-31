@@ -13,7 +13,16 @@
             {
                 self = this;
 
-                GameService.createSession();
+                self.start = function()
+                {
+                    $scope.step()
+                    GameService.storeNewGame($scope.gameName)
+                }
+
+                $scope.$on('game end', function()
+                {
+                    GameService.saveScore($scope.playerScore);
+                })
             }
         ]);
 })();

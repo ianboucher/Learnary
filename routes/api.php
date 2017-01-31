@@ -33,11 +33,13 @@ Route::group(["prefix" => "v1.0.0"], function()
     Route::post('login', 'AuthenticateController@login');
 
     // Routes for standard CRUD operations on resources
-    Route::resource('roles',          'RolesController');
-    Route::resource('permissions',    'PermissionsController');
-    Route::resource('schools',        'SchoolsController');
-    Route::resource('groups',         'GroupsController');
-    Route::resource('users.sessions', 'SessionsController');
+    Route::resource('roles',                'RolesController');
+    Route::resource('permissions',          'PermissionsController');
+    Route::resource('schools',              'SchoolsController');
+    Route::resource('groups',               'GroupsController');
+    Route::resource('users.sessions',       'SessionsController');
+    Route::resource('users.sessions.games', 'GamesController');
+
 
     // Routes for managing relationships between resources
     Route::resource('users.groups',     'UserGroupsController');

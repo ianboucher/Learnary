@@ -59,9 +59,9 @@ class SessionsController extends Controller
 
         // TODO: Define session parameters to be updated and retrieve from Request
 
-        $group->save();
+        $session->save();
 
-        return response()->json($group);
+        return response()->json($session);
     }
 
 
@@ -73,9 +73,9 @@ class SessionsController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $group = Session::find($id);
+        $session = Session::find($id);
 
-        $group->delete();
+        $session->delete();
 
         return 'Session # '. $session->id . ' successfully deleted';
     }

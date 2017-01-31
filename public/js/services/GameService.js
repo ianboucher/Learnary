@@ -11,22 +11,35 @@
 
             function GameService($http, SessionService)
             {
-                var self = this;
+                var self    = this,
+                    user    = SessionService.currentUser,
+                    session = SessionService.currentSession,
+                    game    = {};
 
-                self.createSession = function()
+
+                self.storeNewGame = function(gameName)
                 {
-                    console.log(SessionService.currentUser);
+                    $http.post("api/v1.0.0/users/" + user.id + "/sessions/" + session.id + "/games", {
+                        "name" : gameName
+                    })
+                    .then(function(newGame)
+                    {
+                        game = newGame.data;
+                    })
+                    .catch(function(error)
+                    {
+                        self.error = error;
+                        console.log(self.error); // TODO: handle error properly
+                    });
                 };
 
-                self.saveSession = function()
-                {
 
+                self.saveScore = function(score)
+                {
+                    game.score = score;
+                    $http.put("api/v1.0.0/users/" + user.id + "/sessions/" + session.id + "/games/" + game.id, game)
                 };
 
-                self.endSession = function()
-                {
-
-                };
 
                 self.gamesWon = function()
                 {

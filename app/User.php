@@ -39,4 +39,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Session');
     }
+
+    public function games()
+    {
+        return $this->hasManyThrough('App\Game', 'App\Session');
+    }
 }

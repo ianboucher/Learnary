@@ -25,17 +25,19 @@
                     self.isAuthenticated = $auth.isAuthenticated();
                 }
 
+                if ($window.sessionStorage["currentSession"])
+                {
+                    self.currentSession = JSON.parse($window.sessionStorage["currentSession"]);
+                }
 
                 self.loginError = false;
                 self.loginErrorText;
 
-                // QUESTION: As the User/Role/Permission data are handled by
-                // different controllers, I've performed 3 separate HTTP requests
-                // to retrieve the currentUser data. Is this OK? It seems somewhat
-                // inefficent...
-
                 // QUESTION: What else should I include in my SessionService at
                 // the moment?
+
+                // TODO: Extract some of the logic in the 'login' method into individual
+                // functions to improve readability
 
                 self.login = function(credentials, nextState)
                 {
@@ -48,12 +50,18 @@
                         self.currentUser     = user.data.user;
                         self.isAuthenticated = $auth.isAuthenticated();
                         $window.localStorage.setItem("currentUser", angular.toJson(self.currentUser));
-                        $http.post("api/v1.0.0/users/" + self.currentUser.id + "/sessions")
 
                         if (nextState)
                         {
                             $state.go(nextState);
                         }
+
+                        return $http.post("api/v1.0.0/users/" + self.currentUser.id + "/sessions") // QUESTION: Should I extract this to 'saveSession()' method?
+                    })
+                    .then(function(session)
+                    {
+                        self.currentSession = session.data;
+                        $window.sessionStorage.setItem("currentSession", angular.toJson(self.currentSession));
                     })
                     .catch(function(error)
                     {
