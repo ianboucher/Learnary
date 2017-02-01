@@ -79,8 +79,10 @@
 
                             if (scope.playerScore >= 5)
                             {
-                                scope.playerWin = true;
-                                scope.$broadcast('game end');
+                                scope.playerWin   = true;
+                                scope.gameStats.score = scope.playerScore;
+                                scope.gameStats.win   = true;
+                                scope.$broadcast("game end");
                             }
                         });
                     }
@@ -98,7 +100,9 @@
                             if (scope.computerScore >= 5)
                             {
                                 scope.computerWin = true;
-                                scope.$broadcast('game end');
+                                scope.gameStats.score = scope.playerScore;
+                                scope.gameStats.win   = false;
+                                scope.$broadcast("game end");
                             }
                         });
                     }
@@ -225,17 +229,16 @@
 
                 return {
                     "template" : "<canvas id='game-board'></canvas>",
-                    "replace"     : true,
-                    "restrict"    : "EAC",
-                    // "scope"       : { },
-
-                    link: function(scope, element, attributes)
+                    "replace"  : true,
+                    "restrict" : "EAC",
+                    link       : function(scope, element, attributes)
                     {
                         scope.gameName      = "Pong";
                         scope.playerScore   = 0;
                         scope.computerScore = 0;
                         scope.playerWin     = false;
                         scope.computerWin   = false;
+                        scope.gameStats     = {};
 
                         var canvas      = element[0],
                             context     = canvas.getContext("2d"),
@@ -263,17 +266,22 @@
                         };
 
 
-                        scope.step = function()
+                        var step = function()
                         {
                             if (scope.playerScore < 5 && scope.computerScore < 5)
                             {
                                 update();
                                 renderBoard();
-                                animate(scope.step);
+                                animate(step);
                             }
                         };
 
                         renderBoard();
+
+                        scope.newGame = function()
+                        {
+                            step();
+                        }
 
                         var keysDown = {};
 

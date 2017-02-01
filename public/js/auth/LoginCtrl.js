@@ -14,7 +14,7 @@
 
                 self.login = function()
                 {
-                    SessionService.login($scope.credentials, "play");
+                    SessionService.login($scope.credentials, "menu");
                 };
             }
         ]);

@@ -13,15 +13,18 @@
             {
                 self = this;
 
-                self.start = function()
+                $scope.gameName = GameService.gameName;
+
+                self.newGame = function()
                 {
-                    $scope.step()
+                    $scope.newGame()
                     GameService.storeNewGame($scope.gameName)
                 }
 
-                $scope.$on('game end', function()
+                $scope.$on("game end", function()
                 {
-                    GameService.saveScore($scope.playerScore);
+                    console.log($scope.gameStats);
+                    GameService.saveGameStats($scope.gameStats);
                 })
             }
         ]);

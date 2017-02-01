@@ -25,7 +25,7 @@ class GamesController extends Controller
      * @param  int $userId
      * @return Response
      */
-    public function store(Request $request, $sessionId)
+    public function store(Request $request, $userId, $sessionId)
     {
         $session = Session::findOrFail($sessionId);
         $game    = $session->games()->create(['name' => $request->get('name')]);
@@ -53,12 +53,14 @@ class GamesController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $gameId)
+    public function update(Request $request, $userId, $sessionId, $gameId)
     {
         $game = Game::find($gameId);
 
-        $game->name  = $request->input('name');
-        $game->score = $request->input('score');
+        $game->name   = $request->input('name');
+        $game->score  = $request->input('stats.score');
+        $game->win    = $request->input('stats.win');
+        $game->nMoves = $request->input('stats.nMoves');
 
         $game->save();
 

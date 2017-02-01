@@ -21,6 +21,15 @@
                 $stateProvider
                     .state
                     (
+                        "menu",
+                        {
+                            "url"         : "/menu",
+                            "controller"  : "GameMenuCtrl as menu",
+                            "templateUrl" : "js/games/game-menu.html"
+                        }
+                    )
+                    .state
+                    (
                         "play",
                         {
                             "url"         : "/play",

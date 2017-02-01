@@ -5,10 +5,10 @@
         <h1>Player: {{playerScore}}</h1>
         <h1>Skynet: {{computerScore}}</h1>
         <div>
-            <pong-game></pong-game>
+            <game-selector></game-selector>
         </div>
         <br/>
-        <button class="btn btn-default" ng-click="play.start()">Play</button> <!-- ToDo: Initiate the animation via button click -->
+        <button class="btn btn-default" ng-click="play.newGame()">Play</button> <!-- ToDo: Initiate the animation via button click -->
         <h1 ng-show="playerWin">You win!</h1>
         <h1 ng-show="computerWin">You lose!</h1>
     </center>

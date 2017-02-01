@@ -19,6 +19,7 @@
 
                 self.storeNewGame = function(gameName)
                 {
+                    self.gameName = gameName;
                     $http.post("api/v1.0.0/users/" + user.id + "/sessions/" + session.id + "/games", {
                         "name" : gameName
                     })
@@ -34,9 +35,9 @@
                 };
 
 
-                self.saveScore = function(score)
+                self.saveGameStats = function(stats)
                 {
-                    game.score = score;
+                    game.stats = stats;
                     $http.put("api/v1.0.0/users/" + user.id + "/sessions/" + session.id + "/games/" + game.id, game)
                 };
 
@@ -46,6 +47,7 @@
 
                 };
 
+                self.game = game;
                 return self;
             }
         ])

@@ -85,9 +85,11 @@
     <!-- Game Module -->
     <script src="/js/games/games.module.js"></script>
     <script src="/js/games/games.config.js"></script>
+    <script src="/js/games/GameMenuCtrl.js"></script>
     <script src="/js/games/PlayCtrl.js"></script>
+    <script src="/js/games/gameSelector.js"></script>
     <script src="/js/games/pongGame.js"></script>
-
+    <script src="/js/games/connect4Game.js"></script>
 
 
     <script src="/js/nav/NavCtrl.js"></script>

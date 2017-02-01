@@ -19,6 +19,8 @@ class CreateGamesTable extends Migration
             $table->integer('session_id');
             $table->string('name');
             $table->integer('score')->nullable();
+            $table->boolean('win')->nullable();
+            $table->integer('nMoves')->nullable();
             $table->timestamps();
         });
     }
